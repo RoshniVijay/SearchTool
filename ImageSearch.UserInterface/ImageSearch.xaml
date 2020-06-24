@@ -10,19 +10,40 @@
         <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,10,384,740"/>
         <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="979,10,44,740" RenderTransformOrigin="0.5,0.5"/>
         <ComboBox HorizontalAlignment="Left" Margin="805,10,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}"/>
-        <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078">0
-            <TabItem Header="TabItem">
-                <ListView HorizontalAlignment="Left" Height="360" Margin="10,14,0,0" VerticalAlignment="Top" Width="881" ItemsSource="{Binding ImageResponseURICollection}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="" Width="120" DisplayMemberBinding="{Binding Thumbnails}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+        <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078" RenderTransformOrigin="0.5,0.5">
+            <TabControl.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-0.165"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.997"/>
+                </TransformGroup>
+            </TabControl.RenderTransform>
+            <TabItem Header="{Binding TabHeaders}">
+                <Grid>
+                    <ComboBox Width="120" Margin="938,10,10,623" ItemsSource="{Binding ThumbnailDisplayOptions}" SelectedItem="{Binding DefaultThumbnailDisplay}"/>
+                    <Grid>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,151,0">
+                            <ItemsControl ItemsSource="{Binding ImageResponseURICollection}" Width="917" HorizontalAlignment="Left" Background="Gray">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image Height="256" Width="256" Source="{Binding URI}" Margin="5" Stretch="Uniform"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
             </TabItem>
             <TabItem Header="TabItem">
                 <WebBrowser Margin="10,0,13,0"/>
             </TabItem>
+
         </TabControl>
-     </Grid>
+    </Grid>
 </Window>

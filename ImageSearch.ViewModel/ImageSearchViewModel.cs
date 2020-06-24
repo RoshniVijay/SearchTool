@@ -18,6 +18,9 @@ namespace ImageSearch.ViewModel
         public ObservableCollection<ListViewDataModel> m_ImageResponseURICollection;
         public ObservableCollection<string> m_DataSourceCollection;
         ApplicationConfiguration m_AppConfig;
+        private ObservableCollection<string> m_DisplayOptions;
+        private ObservableCollection<string> m_URL;
+        private ObservableCollection<string> m_TabHeaders;
         
 
         public ICommand m_searchCommand;
@@ -26,18 +29,25 @@ namespace ImageSearch.ViewModel
         {
             m_AppConfig = new ApplicationConfiguration();
 
-                m_DataSourceCollection = new ObservableCollection<string>();
-          
-            m_AppConfig.SelectDataSource(DataSources.Twitter, false);
-
+            m_DataSourceCollection = new ObservableCollection<string>();
+            m_TabHeaders = new ObservableCollection<string>();
             foreach (IDataSource ds in m_AppConfig.AvailableDataSources())
             {
                 m_DataSourceCollection.Add(ds.DataSourceName);
+                if(ds.IsSelected)
+                {
+                    m_TabHeaders.Add(ds.DataSourceName);
+                }
             }
-        }
-        
 
-        protected void OnPropertyChange(string propertyName)
+            m_DisplayOptions = new ObservableCollection<string>();
+            m_DisplayOptions.Add("Small");
+            m_DisplayOptions.Add("Medium");
+            m_DisplayOptions.Add("Large");
+    }
+
+
+    protected void OnPropertyChange(string propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -59,9 +69,24 @@ namespace ImageSearch.ViewModel
 
         }
 
+        public ObservableCollection<string> ThumbnailDisplayOptions
+        {
+            get { return m_DisplayOptions; }
+            set
+            {
+                m_DisplayOptions = value;
+                OnPropertyChange("ThumbnailDisplayOptions");
+            }
+
+        }
+
         public ObservableCollection<ListViewDataModel> ImageResponseURICollection
         {
             get { return m_ImageResponseURICollection; }
+            set
+            {
+                m_ImageResponseURICollection = value;
+            }
         }
 
         public ObservableCollection<string> DataSourceCollection
@@ -91,6 +116,17 @@ namespace ImageSearch.ViewModel
             }
         }
 
+        public ObservableCollection<string> URL
+        {
+            get { return m_URL; }
+            set
+            {
+
+                m_URL = value;
+                OnPropertyChange("URL");
+            }
+        }
+
         public ICommand SearchCommand
         {
             get
@@ -117,15 +153,17 @@ namespace ImageSearch.ViewModel
             qc.QueryParam = ImageSearchQuery;
             IResponseContext respContext = await serviceComponent.PerformImageSearch(qc);
             m_ImageResponseURICollection = new ObservableCollection<ListViewDataModel>();
-
+            URL = new ObservableCollection<string>();
             foreach (string str in respContext.ImageThumbnail)
             {
                 ListViewDataModel listView = new ListViewDataModel();
                 listView.URI = str;
                 m_ImageResponseURICollection.Add(listView);
+                URL.Add(str);
             }
-           
-            OnPropertyChange("ImageResponseURICollection");
+           OnPropertyChange("URL");
+
+           OnPropertyChange("ImageResponseURICollection");
         }
     }
 }
