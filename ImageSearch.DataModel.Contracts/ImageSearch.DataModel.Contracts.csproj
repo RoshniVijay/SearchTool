@@ -41,9 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IHttpResponse.cs" />
     <Compile Include="IResponseContext.cs" />
     <Compile Include="IQueryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">
+      <Project>{cc530807-23c9-47f8-8d7f-6e76385e4834}</Project>
+      <Name>ImageSearch.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

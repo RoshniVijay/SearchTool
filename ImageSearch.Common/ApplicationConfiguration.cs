@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -9,6 +10,7 @@ namespace ImageSearch.Common
         private string m_DataSourceName = "Flicker";
         private string m_URI = "https://www.flickr.com/services/feeds/photos_public.gne";
         bool m_bISSelected = false;
+        DataSources m_Type = DataSources.Flicker;
 
         public string DataSourceName
         {
@@ -36,13 +38,26 @@ namespace ImageSearch.Common
             }
                
         }
+
+        public DataSources DataSourceEnum
+        {
+            get
+            {
+                return m_Type;
+            }
+            set
+            {
+                m_Type = value;
+            }
+        }
     }
 
-    public class TwitterDataSource : IDataSource
+    public class NewsAPIDataSource : IDataSource
     {
-        private string m_DataSourceName = "Twitter";
-        private string m_URI = "https://api.twitter.com/1.1/search/tweets.json";
+        private string m_DataSourceName = "NewsAPI";
+        private string m_URI = "http://newsapi.org/v2/everything";
         bool m_bIsSelected = false;
+        DataSources m_Type = DataSources.NewsAPI;
 
         public string DataSourceName
         {
@@ -70,13 +85,25 @@ namespace ImageSearch.Common
             }
 
         }
+
+        public DataSources DataSourceEnum
+        {
+            get
+            {
+                return m_Type;
+            }
+            set
+            {
+                m_Type = value;
+            }
+        }
     }
 
     public enum DataSources
     {
         Flicker,
 
-        Twitter
+        NewsAPI
     }
 
     public class ApplicationConfiguration
@@ -86,7 +113,7 @@ namespace ImageSearch.Common
         public ApplicationConfiguration()
         {
             m_AvailableDataSources.Add(DataSources.Flicker, new FlickerDataSource());
-            m_AvailableDataSources.Add(DataSources.Twitter, new TwitterDataSource());
+            m_AvailableDataSources.Add(DataSources.NewsAPI, new NewsAPIDataSource());
             SelectDataSource(DataSources.Flicker, true);
         }
 
@@ -95,9 +122,33 @@ namespace ImageSearch.Common
             m_AvailableDataSources[dataSource].IsSelected = bSelectionFlag;
         }
 
+        //TODO: can be removed
+        public IDataSource GetDataSource(string dataSourceName)
+        {
+            foreach (IDataSource dataSource in m_AvailableDataSources.Values)
+            {
+                if (dataSource.DataSourceName == dataSourceName)
+                    return dataSource;
+            }
+            
+            throw new Exception("Passes data source does not exist" + dataSourceName);
+        }
+
+        public IDataSource GetDataSource(DataSources dataSourceEnum)
+        {
+            return m_AvailableDataSources[dataSourceEnum];
+        }
+
         public ICollection<IDataSource> AvailableDataSources()
         {
             return m_AvailableDataSources.Values;
+        }
+
+        public DataSources CurrentDataSourceSelection { get; set; }
+
+        public void SetCurrentDataSourceSelection(string dataSource)
+        {
+            CurrentDataSourceSelection = GetDataSource(dataSource).DataSourceEnum;
         }
 
     }

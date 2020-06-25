@@ -41,12 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TextResponseData.cs" />
+    <Compile Include="NewsApiResponse.cs" />
+    <Compile Include="NewsResponseContext.cs" />
+    <Compile Include="TextResponseDataModel.cs" />
     <Compile Include="QueryContext.cs" />
-    <Compile Include="ImageResponseData.cs" />
+    <Compile Include="ImageResponseDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">
+      <Project>{cc530807-23c9-47f8-8d7f-6e76385e4834}</Project>
+      <Name>ImageSearch.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageSearch.DataModel.Contracts\ImageSearch.DataModel.Contracts.csproj">
       <Project>{e6f8eddc-da10-4e4a-a183-95e1f01e45f2}</Project>
       <Name>ImageSearch.DataModel.Contracts</Name>

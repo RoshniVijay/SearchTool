@@ -7,43 +7,49 @@
         mc:Ignorable="d"
         Title="I m a g e  S e a r c h" Height="800" Width="1160" Background="#FF535050" Foreground="#FFDC7070" FontFamily="Trebuchet MS" FontWeight="Bold">
     <Grid RenderTransformOrigin="0.621,0.435">
-        <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,10,384,740"/>
-        <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="979,10,44,740" RenderTransformOrigin="0.5,0.5"/>
-        <ComboBox HorizontalAlignment="Left" Margin="805,10,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}"/>
-        <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078" RenderTransformOrigin="0.5,0.5">
-            <TabControl.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="-0.165"/>
-                    <RotateTransform/>
-                    <TranslateTransform X="-0.997"/>
-                </TransformGroup>
-            </TabControl.RenderTransform>
-            <TabItem Header="{Binding TabHeaders}">
+        <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,20,384,730"/>
+        <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="979,20,44,730" RenderTransformOrigin="0.5,0.5"/>
+        <ComboBox Name="m_DataSourceCombo" HorizontalAlignment="Left" Margin="805,20,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}" SelectedItem="{Binding CurrentDataSourceSelection}" SelectionChanged="M_DataSourceCombo_SelectionChanged"/>
+        <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078" RenderTransformOrigin="0.5,0.5" Loaded="OnTabControlLoad">
+            <TabItem Header="{Binding CurrentDataSourceSelection}">
                 <Grid>
-                    <ComboBox Width="120" Margin="938,10,10,623" ItemsSource="{Binding ThumbnailDisplayOptions}" SelectedItem="{Binding DefaultThumbnailDisplay}"/>
-                    <Grid>
+                    <Grid Name="m_ImageGrid">
+                        <ComboBox Name="m_displayOptionsCombo" Width="120" Margin="928,10,20,637" ItemsSource="{Binding ThumbnailDisplayOptions}" SelectionChanged="ComboBox_SelectionChanged"/>
+                        <Grid>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,151,0">
+                                <ItemsControl ItemsSource="{Binding ImageResponseURICollection}" Width="917" HorizontalAlignment="Left" Background="Gray">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Height="{Binding Path=DataContext.ImageSize.Height, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Width="{Binding Path=DataContext.ImageSize.Height, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Source="{Binding URI}" Margin="5" Stretch="Uniform"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                    <Grid Name="m_StackPanel">
+                        <!--<ComboBox Name="m_Details" Width="120" Margin="928,10,20,637" ItemsSource="{Binding ThumbnailDisplayOptions}" SelectionChanged="ComboBox_SelectionChanged"/>-->
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,151,0">
-                            <ItemsControl ItemsSource="{Binding ImageResponseURICollection}" Width="917" HorizontalAlignment="Left" Background="Gray">
+                            <ItemsControl ItemsSource="{Binding ImageResponseURICollection}" Background="AliceBlue">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Image Height="256" Width="256" Source="{Binding URI}" Margin="5" Stretch="Uniform"/>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding URI}" />
+                                            <TextBlock Text="{Binding URI}" />
+                                        </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </ScrollViewer>
+                    
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <WebBrowser Margin="10,0,13,0"/>
-            </TabItem>
-
         </TabControl>
     </Grid>
 </Window>

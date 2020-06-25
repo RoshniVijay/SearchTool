@@ -41,10 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISearchServiceComponent.cs" />
+    <Compile Include="AbstractServiceComponentFactory.cs" />
+    <Compile Include="IServiceComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">
+      <Project>{cc530807-23c9-47f8-8d7f-6e76385e4834}</Project>
+      <Name>ImageSearch.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageSearch.DataModel.Contracts\ImageSearch.DataModel.Contracts.csproj">
       <Project>{e6f8eddc-da10-4e4a-a183-95e1f01e45f2}</Project>
       <Name>ImageSearch.DataModel.Contracts</Name>

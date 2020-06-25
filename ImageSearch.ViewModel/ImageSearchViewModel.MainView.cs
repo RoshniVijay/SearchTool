@@ -1,53 +1,58 @@
 ﻿using ImageSearch.Common;
 using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent.APIs;
 using ImageSearch.ServiceComponent.Contracts;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
 namespace ImageSearch.ViewModel
 {
-    public class ImageSearchViewModel : INotifyPropertyChanged
-    {
-        private IResponseContext imageThumbnailData;
+    public partial class ImageSearchViewModel : INotifyPropertyChanged
+    {       
         private string imageSearchQuery = "Nature";
         public event PropertyChangedEventHandler PropertyChanged;
-        public ObservableCollection<ListViewDataModel> m_ImageResponseURICollection;
+       
         public ObservableCollection<string> m_DataSourceCollection;
         ApplicationConfiguration m_AppConfig;
-        private ObservableCollection<string> m_DisplayOptions;
-        private ObservableCollection<string> m_URL;
-        private ObservableCollection<string> m_TabHeaders;
         
-
+        private string m_CurrentSelectedDataSource;
+        AbstractServiceComponentFactory m_ServiceComponentFactory = new ServiceComponentFactory();
+        
         public ICommand m_searchCommand;
 
         public ImageSearchViewModel()
         {
+            m_Size = new Size();
+            m_Size.Height = 128;
+            m_Size.Width = 128;
             m_AppConfig = new ApplicationConfiguration();
 
             m_DataSourceCollection = new ObservableCollection<string>();
-            m_TabHeaders = new ObservableCollection<string>();
+            
             foreach (IDataSource ds in m_AppConfig.AvailableDataSources())
             {
                 m_DataSourceCollection.Add(ds.DataSourceName);
                 if(ds.IsSelected)
                 {
-                    m_TabHeaders.Add(ds.DataSourceName);
+                    m_CurrentSelectedDataSource = ds.DataSourceName;
                 }
             }
+
+            OnPropertyChange("CurrentSelection");
 
             m_DisplayOptions = new ObservableCollection<string>();
             m_DisplayOptions.Add("Small");
             m_DisplayOptions.Add("Medium");
             m_DisplayOptions.Add("Large");
-    }
+
+            OnPropertyChange("ThumbnailDisplayOptions");
+            InitializeFlickerData();
+            InitializeNewsAPIData();
+        }
 
 
-    protected void OnPropertyChange(string propertyName)
+        protected void OnPropertyChange(string propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -55,37 +60,30 @@ namespace ImageSearch.ViewModel
             }
         }
 
-        public IResponseContext ImageThumbnailData
+      
+
+        public string CurrentDataSourceSelection
         {
-            get { return imageThumbnailData; }
+            get { return m_CurrentSelectedDataSource; }
             set
             {
-                if (imageThumbnailData != value)
+                if (m_CurrentSelectedDataSource != value)
                 {
-                    imageThumbnailData = value;
-                    OnPropertyChange("ImageThumbnailData");
+                    m_CurrentSelectedDataSource = value;
+                    OnPropertyChange("CurrentDataSourceSelection");
+                    m_AppConfig.SetCurrentDataSourceSelection(m_CurrentSelectedDataSource);
                 }
             }
 
         }
 
-        public ObservableCollection<string> ThumbnailDisplayOptions
+       
+        public string CurrentSelectedDataSource
         {
-            get { return m_DisplayOptions; }
+            get { return m_CurrentSelectedDataSource; }
             set
             {
-                m_DisplayOptions = value;
-                OnPropertyChange("ThumbnailDisplayOptions");
-            }
-
-        }
-
-        public ObservableCollection<ListViewDataModel> ImageResponseURICollection
-        {
-            get { return m_ImageResponseURICollection; }
-            set
-            {
-                m_ImageResponseURICollection = value;
+                m_CurrentSelectedDataSource = value;
             }
         }
 
@@ -116,17 +114,6 @@ namespace ImageSearch.ViewModel
             }
         }
 
-        public ObservableCollection<string> URL
-        {
-            get { return m_URL; }
-            set
-            {
-
-                m_URL = value;
-                OnPropertyChange("URL");
-            }
-        }
-
         public ICommand SearchCommand
         {
             get
@@ -146,24 +133,13 @@ namespace ImageSearch.ViewModel
 
         private async void Search()
         {
-            
-
-            ISearchServiceComponent serviceComponent = new SearchServiceComponent(m_AppConfig);
-            IQueryContext qc = new QueryContext();
-            qc.QueryParam = ImageSearchQuery;
-            IResponseContext respContext = await serviceComponent.PerformImageSearch(qc);
-            m_ImageResponseURICollection = new ObservableCollection<ListViewDataModel>();
-            URL = new ObservableCollection<string>();
-            foreach (string str in respContext.ImageThumbnail)
-            {
-                ListViewDataModel listView = new ListViewDataModel();
-                listView.URI = str;
-                m_ImageResponseURICollection.Add(listView);
-                URL.Add(str);
-            }
-           OnPropertyChange("URL");
-
-           OnPropertyChange("ImageResponseURICollection");
+            IServiceComponent serviceComponent = m_ServiceComponentFactory.CreateSingleton(m_AppConfig.CurrentDataSourceSelection);
+            IQueryContext queryContext = new QueryContext();
+            queryContext.ApplicationConfiguration = m_AppConfig;
+            queryContext.QueryParam = ImageSearchQuery;
+            IResponseContext respContext = await serviceComponent.PerformSearch(queryContext);
+            PopulateFlickerDataFields(respContext);
+            PopulateNewsAPIDataFields(respContext);
         }
     }
 }

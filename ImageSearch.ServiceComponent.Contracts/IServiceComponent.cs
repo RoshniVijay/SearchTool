@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace ImageSearch.ServiceComponent.Contracts
 {
-    public interface ISearchServiceComponent
+    public interface IServiceComponent
     {
-        Task<IResponseContext> PerformImageSearch(IQueryContext queryContext);
+        Task<IResponseContext> PerformSearch(IQueryContext queryContext);
     }
 }
