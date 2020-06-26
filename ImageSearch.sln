@@ -19,6 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{455942C8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.ServiceComponent", "UnitTests.ServiceComponent\UnitTests.ServiceComponent.csproj", "{0ACADF0D-C2E9-4B73-8CC2-ACEFB6D0F413}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{9178A5E3-1D85-48AE-88AF-30A30C433349}"
+	ProjectSection(SolutionItems) = preProject
+		Documents\Class Diagram Service Component.vsdx = Documents\Class Diagram Service Component.vsdx
+		Documents\High Level Design.png = Documents\High Level Design.png
+		Documents\SequenceDiagram.png = Documents\SequenceDiagram.png
+		Documents\System Design.png = Documents\System Design.png
+		Documents\UseCase.png = Documents\UseCase.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

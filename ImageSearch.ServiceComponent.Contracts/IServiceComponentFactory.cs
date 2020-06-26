@@ -6,8 +6,8 @@ namespace ImageSearch.ServiceComponent.Contracts
     /// <summary>
     /// Abstract factory
     /// </summary>
-    public interface IAbstractServiceComponentFactory
+    public interface IServiceComponentFactory
     {
-        IServiceComponent CreateSingleton(DataSources dataSource);
+        IServiceComponent CreateServiceComponent(DataSources dataSource);
     }
 }

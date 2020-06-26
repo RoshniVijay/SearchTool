@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using ImageSearch.Common;
 using ImageSearch.DataModel;
-using ImageSearch.ServiceComponent.Contracts;
 using Newtonsoft.Json;
 
 namespace ImageSearch.ServiceComponent
@@ -11,13 +10,13 @@ namespace ImageSearch.ServiceComponent
     /// <summary>
     /// Component to make specific query to NewsAPI server
     /// </summary>
-    public class NewsAPISearchServiceComponent : BaseServiceComponent, IServiceComponent
+    public class NewsAPISearchServiceComponent : AbstractServiceComponent
     {
         /// <summary>
         /// API to perform NewsAPI search
         /// </summary>
         /// <param name="queryContext"></param>
-        public async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
+        public override async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
         {
             ApplicationConfiguration appConfig = queryContext.ApplicationConfiguration;
             IDataSource ds = appConfig.GetDataSource(DataSources.NewsAPI);

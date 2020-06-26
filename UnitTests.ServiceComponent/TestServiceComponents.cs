@@ -17,29 +17,29 @@ namespace UnitTests.ServiceComponent
         /// Tests the create factory  method to check if correct instance are returned during repeated calls
         /// </summary>
         [TestMethod]
-        public void Test_CreateSingleton_Positive()
+        public void Test_CreateServiceComponent_Positive()
         {
-            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
-            IServiceComponent serviceComponent = serviceFactory.CreateSingleton(DataSources.Flicker);
+            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IServiceComponent serviceComponent = serviceFactory.CreateServiceComponent(DataSources.Flicker);
             Assert.IsTrue(serviceComponent is FlickerSearchServiceComponent);
 
-            IServiceComponent serviceComponent2 = serviceFactory.CreateSingleton(DataSources.Flicker);
+            IServiceComponent serviceComponent2 = serviceFactory.CreateServiceComponent(DataSources.Flicker);
             Assert.IsTrue(serviceComponent2 is FlickerSearchServiceComponent);
             Assert.AreSame(serviceComponent, serviceComponent2);
 
-            IServiceComponent serviceComponent3 = serviceFactory.CreateSingleton(DataSources.Flicker);
+            IServiceComponent serviceComponent3 = serviceFactory.CreateServiceComponent(DataSources.Flicker);
             Assert.IsTrue(serviceComponent3 is FlickerSearchServiceComponent);
             Assert.AreSame(serviceComponent, serviceComponent3);
 
-            IServiceComponent serviceComponent4 = serviceFactory.CreateSingleton(DataSources.NewsAPI);
+            IServiceComponent serviceComponent4 = serviceFactory.CreateServiceComponent(DataSources.NewsAPI);
             Assert.IsTrue(serviceComponent4 is NewsAPISearchServiceComponent);
 
-            IServiceComponent serviceComponent5 = serviceFactory.CreateSingleton(DataSources.NewsAPI);
+            IServiceComponent serviceComponent5 = serviceFactory.CreateServiceComponent(DataSources.NewsAPI);
             Assert.IsTrue(serviceComponent5 is NewsAPISearchServiceComponent);
             Assert.AreSame(serviceComponent5, serviceComponent4);
 
-            IAbstractServiceComponentFactory serviceFactory6 = new ServiceComponentFactory();
-            IServiceComponent serviceComponent6 = serviceFactory.CreateSingleton(DataSources.Flicker);
+            IServiceComponentFactory serviceFactory6 = new ServiceComponentFactory();
+            IServiceComponent serviceComponent6 = serviceFactory.CreateServiceComponent(DataSources.Flicker);
             Assert.IsTrue(serviceComponent6 is FlickerSearchServiceComponent);
             Assert.AreSame(serviceComponent, serviceComponent6);
         }
@@ -51,8 +51,8 @@ namespace UnitTests.ServiceComponent
         [ExpectedException(typeof(ArgumentException))]
         public async Task Test_FlickerServiceComponent_Negative()
         {
-            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
-            IServiceComponent serviceComponent = serviceFactory.CreateSingleton(DataSources.Flicker);
+            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IServiceComponent serviceComponent = serviceFactory.CreateServiceComponent(DataSources.Flicker);
             IQueryContext queryContext = new QueryContext();
             queryContext.ApplicationConfiguration = null;
             queryContext.QueryParam = null;
@@ -76,7 +76,7 @@ namespace UnitTests.ServiceComponent
             Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
             mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
 
-            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
             IServiceComponent serviceComponent = new FlickerSearchServiceComponent();
             IResponseContext rc = await serviceComponent.PerformSearch(qc);
 
@@ -100,7 +100,7 @@ namespace UnitTests.ServiceComponent
             Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
             mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
 
-            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
             IServiceComponent serviceComponent = new NewsAPISearchServiceComponent();
             IResponseContext rc = await serviceComponent.PerformSearch(qc);
 

@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractServiceComponentFactory.cs" />
+    <Compile Include="IServiceComponentFactory.cs" />
     <Compile Include="IHttpRestAPIHelper.cs" />
     <Compile Include="IServiceComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

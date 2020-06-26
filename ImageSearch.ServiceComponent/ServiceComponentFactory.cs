@@ -9,7 +9,7 @@ namespace ImageSearch.ServiceComponent
     /// <summary>
     /// Factory to create service component.
     /// </summary>
-    public class ServiceComponentFactory : IAbstractServiceComponentFactory
+    public class ServiceComponentFactory : IServiceComponentFactory
     {
         /// <summary>
         /// creates object first time and caches it
@@ -22,7 +22,7 @@ namespace ImageSearch.ServiceComponent
         /// </summary>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public IServiceComponent CreateSingleton(DataSources dataSource)
+        public IServiceComponent CreateServiceComponent(DataSources dataSource)
         {
             if (myServiceComponentPool.Keys.Contains(dataSource))
             {

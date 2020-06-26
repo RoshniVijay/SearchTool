@@ -11,14 +11,13 @@ namespace ImageSearch.ServiceComponent
     /// <summary>
     /// Component to make specific query to Flicker server
     /// </summary>
-    public class FlickerSearchServiceComponent : BaseServiceComponent, IServiceComponent
+    public class FlickerSearchServiceComponent : AbstractServiceComponent
     {
-        
         /// <summary>
         /// API to perform flicker search
         /// </summary>
         /// <param name="queryContext"></param>
-        public async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
+        public override async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
         {
             if(queryContext?.ApplicationConfiguration == null || queryContext.QueryParam == null)
             {

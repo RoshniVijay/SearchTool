@@ -44,7 +44,7 @@ namespace ImageSearch.ViewModel
         /// <summary>
         /// AbstractFactory for biz logic component
         /// </summary>
-        private readonly IAbstractServiceComponentFactory m_ServiceComponentFactory;
+        private readonly IServiceComponentFactory m_ServiceComponentFactory;
         /// <summary>
         /// Search command triggered by search in UI
         /// </summary>
@@ -182,7 +182,7 @@ namespace ImageSearch.ViewModel
         private async void Search()
         {
             DateTime curDateTime = DateTime.Now;
-            IServiceComponent serviceComponent = m_ServiceComponentFactory.CreateSingleton(m_AppConfig.CurrentDataSourceSelection);
+            IServiceComponent serviceComponent = m_ServiceComponentFactory.CreateServiceComponent(m_AppConfig.CurrentDataSourceSelection);
             IQueryContext queryContext = new QueryContext();
             queryContext.ApplicationConfiguration = m_AppConfig;
             queryContext.QueryParam = ImageSearchQuery;
