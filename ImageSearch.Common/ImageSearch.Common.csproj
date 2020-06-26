@@ -41,13 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationConfiguration.cs" />
-    <Compile Include="FlickerDataSource.cs" />
-    <Compile Include="DataSources.cs" />
-    <Compile Include="IDataSource.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="NewsAPIDataSource.cs" />
+    <Compile Include="Common\ApplicationConfiguration.cs" />
+    <Compile Include="Common\ErrorCodes.cs" />
+    <Compile Include="ErrorCodes.cs" />
+    <Compile Include="Flicker\FlickerDataSource.cs" />
+    <Compile Include="Common\DataSources.cs" />
+    <Compile Include="Common\HTTPAPIResponse.cs" />
+    <Compile Include="Common\IDataSource.cs" />
+    <Compile Include="Common\IHttpAPIResponse.cs" />
+    <Compile Include="Common\IQueryContext.cs" />
+    <Compile Include="Common\IResponseContext.cs" />
+    <Compile Include="Common\Logger.cs" />
+    <Compile Include="NewsAPI\NewsAPIDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\QueryContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

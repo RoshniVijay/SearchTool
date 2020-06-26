@@ -53,10 +53,6 @@
       <Project>{cc530807-23c9-47f8-8d7f-6e76385e4834}</Project>
       <Name>ImageSearch.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageSearch.DataModel.Contracts\ImageSearch.DataModel.Contracts.csproj">
-      <Project>{e6f8eddc-da10-4e4a-a183-95e1f01e45f2}</Project>
-      <Name>ImageSearch.DataModel.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImageSearch.DataModel\ImageSearch.DataModel.csproj">
       <Project>{bf0b07f0-1cf9-4318-b339-469251b18704}</Project>
       <Name>ImageSearch.DataModel</Name>

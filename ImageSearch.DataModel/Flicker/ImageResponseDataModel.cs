@@ -1,4 +1,4 @@
-﻿using ImageSearch.DataModel.Contracts;
+﻿using ImageSearch.Common;
 using System.Collections.ObjectModel;
 
 namespace ImageSearch.DataModel

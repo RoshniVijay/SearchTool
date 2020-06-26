@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using ImageSearch.Common;
 using ImageSearch.DataModel;
-using ImageSearch.DataModel.Contracts;
 using ImageSearch.ServiceComponent.Contracts;
 
 namespace ImageSearch.ServiceComponent

@@ -1,7 +1,4 @@
-﻿using ImageSearch.DataModel.Contracts;
-using ImageSearch.Common;
-
-namespace ImageSearch.DataModel
+﻿namespace ImageSearch.Common
 {
     /// <summary>
     /// Query data

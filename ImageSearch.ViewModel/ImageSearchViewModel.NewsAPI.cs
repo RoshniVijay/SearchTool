@@ -1,4 +1,5 @@
-﻿using ImageSearch.DataModel;
+﻿using ImageSearch.Common;
+using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
 using System.Collections.ObjectModel;
 

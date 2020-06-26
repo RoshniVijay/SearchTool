@@ -1,6 +1,6 @@
 ﻿using ImageSearch.Common;
 
-namespace ImageSearch.DataModel.Contracts
+namespace ImageSearch.Common
 {
     /// <summary>
     /// Query context with search string etc passed to the rest client

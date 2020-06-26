@@ -1,4 +1,4 @@
-﻿using ImageSearch.DataModel.Contracts;
+﻿using ImageSearch.Common;
 using System.Threading.Tasks;
 
 namespace ImageSearch.ServiceComponent.Contracts

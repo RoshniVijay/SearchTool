@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ImageSearch.DataModel;
 using ImageSearch.Common;
-using ImageSearch.DataModel.Contracts;
 using ImageSearch.ServiceComponent.Contracts;
 
 namespace ImageSearch.ServiceComponent.Utilities

@@ -1,4 +1,6 @@
-﻿namespace ImageSearch.DataModel.Contracts
+﻿using ImageSearch.DataModel.Contracts;
+
+namespace ImageSearch.Common
 {
     /// <summary>
     /// API response from restclients to caller

@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.ViewModel", "Im
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.ServiceComponent", "ImageSearch.ServiceComponent\ImageSearch.ServiceComponent.csproj", "{F1085286-8C53-4A81-BD59-EC431C3DD41F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.DataModel.Contracts", "ImageSearch.DataModel.Contracts\ImageSearch.DataModel.Contracts.csproj", "{E6F8EDDC-DA10-4E4A-A183-95E1F01E45F2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.ServiceComponent.Contracts", "ImageSearch.ServiceComponent.Contracts\ImageSearch.ServiceComponent.Contracts.csproj", "{01644A6C-242D-41A7-B207-0B7BF664AF83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.Common", "ImageSearch.Common\ImageSearch.Common.csproj", "{CC530807-23C9-47F8-8D7F-6E76385E4834}"
@@ -43,10 +41,6 @@ Global
 		{F1085286-8C53-4A81-BD59-EC431C3DD41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1085286-8C53-4A81-BD59-EC431C3DD41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1085286-8C53-4A81-BD59-EC431C3DD41F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6F8EDDC-DA10-4E4A-A183-95E1F01E45F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6F8EDDC-DA10-4E4A-A183-95E1F01E45F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6F8EDDC-DA10-4E4A-A183-95E1F01E45F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6F8EDDC-DA10-4E4A-A183-95E1F01E45F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{01644A6C-242D-41A7-B207-0B7BF664AF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01644A6C-242D-41A7-B207-0B7BF664AF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01644A6C-242D-41A7-B207-0B7BF664AF83}.Release|Any CPU.ActiveCfg = Release|Any CPU

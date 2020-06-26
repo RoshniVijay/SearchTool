@@ -1,6 +1,6 @@
 ﻿using ImageSearch.DataModel.Contracts;
 
-namespace ImageSearch.DataModel
+namespace ImageSearch.Common
 {
     /// <summary>
     /// Response from rest client with status of HTTPcall
