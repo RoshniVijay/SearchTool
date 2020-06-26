@@ -5,22 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageSearch.View"
         mc:Ignorable="d"
-        Title="I m a g e  S e a r c h" Height="800" Width="1160" Background="#FF535050" Foreground="#FFDC7070" FontFamily="Trebuchet MS" FontWeight="Bold">
+        Title="I m a g e  S e a r c h" Height="800" Width="1160" Background="#FF535050" Foreground="#FFDC7070" FontFamily="Trebuchet MS" FontWeight="Bold" ResizeMode="NoResize">
     <Grid RenderTransformOrigin="0.621,0.435">
-        <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,20,384,730"/>
-        <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="979,20,44,730" RenderTransformOrigin="0.5,0.5"/>
-        <ComboBox Name="m_DataSourceCombo" HorizontalAlignment="Left" Margin="805,20,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}" SelectedItem="{Binding CurrentDataSourceSelection}" SelectionChanged="M_DataSourceCombo_SelectionChanged"/>
-        <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078" RenderTransformOrigin="0.5,0.5" Loaded="OnTabControlLoad">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="310*"/>
+            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="801*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,20,384,730" Grid.ColumnSpan="3"/>
+        <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="628,20,44,730" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
+        <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078" RenderTransformOrigin="0.5,0.5" Loaded="OnTabControlLoad" Grid.ColumnSpan="3">
             <TabItem Header="{Binding CurrentDataSourceSelection}">
                 <Grid>
-                    <Grid Name="m_ImageGrid">
-                        <ComboBox Name="m_displayOptionsCombo" Width="120" Margin="928,10,20,637" ItemsSource="{Binding ThumbnailDisplayOptions}" SelectionChanged="ComboBox_SelectionChanged"/>
+                    <Grid x:Name="m_ImageGrid">
+                        <ComboBox x:Name="m_displayOptionsCombo" Width="120" Margin="928,10,20,628" ItemsSource="{Binding ThumbnailDisplayOptions}" SelectedItem="{Binding CurrentThumbnailDisplayOption}"/>
                         <Grid>
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,151,0">
-                                <ItemsControl ItemsSource="{Binding ImageResponseURICollection}" Width="917" HorizontalAlignment="Left" Background="Gray">
+                                <ItemsControl Name="m_ImageGridControl" ItemsSource="{Binding ImageResponseURICollection}" Width="917" HorizontalAlignment="Left" Background="Gray">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Image Height="{Binding Path=DataContext.ImageSize.Height, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Width="{Binding Path=DataContext.ImageSize.Height, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Source="{Binding URI}" Margin="5" Stretch="Uniform"/>
+                                            <Image Height="{Binding DataContext.ImageSize.Height, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Width="{Binding DataContext.ImageSize.Height, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Source="{Binding URI}" Margin="5" Stretch="Uniform"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                     <ItemsControl.ItemsPanel>
@@ -32,24 +36,30 @@
                             </ScrollViewer>
                         </Grid>
                     </Grid>
-                    <Grid Name="m_StackPanel">
-                        <!--<ComboBox Name="m_Details" Width="120" Margin="928,10,20,637" ItemsSource="{Binding ThumbnailDisplayOptions}" SelectionChanged="ComboBox_SelectionChanged"/>-->
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,151,0">
-                            <ItemsControl ItemsSource="{Binding ImageResponseURICollection}" Background="AliceBlue">
+                    <Grid x:Name="m_NewsStackPanel">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,10,0">
+                            <ItemsControl ItemsSource="{Binding NewsItemsResponseCollection}" Background="AliceBlue" Width="1069">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding URI}" />
-                                            <TextBlock Text="{Binding URI}" />
-                                        </StackPanel>
+                                        <Grid Margin="5">
+                                            <StackPanel x:Name="m_MorePanel" Margin="5,5,5,5">
+                                                <TextBlock Text="{Binding Author}" Foreground="Red" />
+                                                <TextBlock Text="{Binding Title}" FontWeight="Bold" FontStyle="Italic" FontSize="15"/>
+                                                <TextBlock Text="{Binding Description}" />
+                                                <TextBlock Text="{Binding Url}" />
+                                                <TextBlock Text="{Binding PublishedAt}" />
+                                            </StackPanel>
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
-                    
+
                     </Grid>
                 </Grid>
             </TabItem>
         </TabControl>
+        <ComboBox Name="m_DataSourceCombo" HorizontalAlignment="Left" Margin="454,20,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}" SelectedItem="{Binding CurrentDataSourceSelection}" SelectionChanged="OnDataSourceSelectionChanged" Grid.Column="2"/>
+        <Label Content="{Binding Status}" HorizontalAlignment="Left" Margin="0,751,0,0" VerticalAlignment="Top" Width="1152" Height="22" Grid.ColumnSpan="3"/>
     </Grid>
 </Window>

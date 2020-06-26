@@ -1,56 +1,72 @@
-﻿using ImageSearch.Common;
-using ImageSearch.DataModel;
-using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent.Contracts;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using ImageSearch.Common;
+using ImageSearch.DataModel;
+using ImageSearch.DataModel.Contracts;
+using ImageSearch.ServiceComponent.Contracts;
 
 namespace ImageSearch.ViewModel
 {
+    /// <summary>
+    /// Main View Model class. It acts as the view model for the common controls like search string, search button etc
+    /// </summary>
     public partial class ImageSearchViewModel : INotifyPropertyChanged
-    {       
-        private string imageSearchQuery = "Nature";
+    {
+        #region Implement INotifyPropertyChanged Interface
+        /// <summary>
+        /// Public event that the view subscribes to keep the View and view model in sync
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-       
-        public ObservableCollection<string> m_DataSourceCollection;
-        ApplicationConfiguration m_AppConfig;
-        
-        private string m_CurrentSelectedDataSource;
-        AbstractServiceComponentFactory m_ServiceComponentFactory = new ServiceComponentFactory();
-        
-        public ICommand m_searchCommand;
 
+        #endregion Implement INotifyPropertyChanged Interface
+
+        #region Main View Model elements
+        /// <summary>
+        /// Search string entered in UI
+        /// </summary>
+        private string m_imageSearchQuery = "Nature";    
+        /// <summary>
+        /// Source from which the query has to be made
+        /// </summary>
+        private ObservableCollection<string> m_DataSourceCollection;
+        /// <summary>
+        /// Application Configuration
+        /// </summary>
+        private ApplicationConfiguration m_AppConfig;
+        /// <summary>
+        /// Currently selected data source in UI - flicker/twitter/NewsAPI etc
+        /// </summary>
+        private string m_CurrentSelectedDataSource;
+        /// <summary>
+        /// AbstractFactory for biz logic component
+        /// </summary>
+        private AbstractServiceComponentFactory m_ServiceComponentFactory;
+        /// <summary>
+        /// Search command triggered by search in UI
+        /// </summary>
+        private ICommand m_searchCommand;
+        /// <summary>
+        /// Status of query/failure etc
+        /// </summary>
+        private string m_Status;
+
+        #endregion Main View Model elements
+
+        /// <summary>
+        /// Constructor. Called only once during initialization of the view
+        /// </summary>
         public ImageSearchViewModel()
         {
-            m_Size = new Size();
-            m_Size.Height = 128;
-            m_Size.Width = 128;
+            m_ServiceComponentFactory = new ServiceComponentFactory();
             m_AppConfig = new ApplicationConfiguration();
-
             m_DataSourceCollection = new ObservableCollection<string>();
-            
-            foreach (IDataSource ds in m_AppConfig.AvailableDataSources())
-            {
-                m_DataSourceCollection.Add(ds.DataSourceName);
-                if(ds.IsSelected)
-                {
-                    m_CurrentSelectedDataSource = ds.DataSourceName;
-                }
-            }
-
-            OnPropertyChange("CurrentSelection");
-
-            m_DisplayOptions = new ObservableCollection<string>();
-            m_DisplayOptions.Add("Small");
-            m_DisplayOptions.Add("Medium");
-            m_DisplayOptions.Add("Large");
-
-            OnPropertyChange("ThumbnailDisplayOptions");
+       
+            //Initialize other partial classes that has specific view model/Controls for datasources like Flicker/twitter etc
             InitializeFlickerData();
             InitializeNewsAPIData();
         }
-
 
         protected void OnPropertyChange(string propertyName)
         {
@@ -77,15 +93,7 @@ namespace ImageSearch.ViewModel
 
         }
 
-       
-        public string CurrentSelectedDataSource
-        {
-            get { return m_CurrentSelectedDataSource; }
-            set
-            {
-                m_CurrentSelectedDataSource = value;
-            }
-        }
+
 
         public ObservableCollection<string> DataSourceCollection
         {
@@ -101,14 +109,28 @@ namespace ImageSearch.ViewModel
             }
         }
 
-        public string ImageSearchQuery
+        
+        public string Status
         {
-            get { return imageSearchQuery; }
+            get { return m_Status; }
             set
             {
-                if (imageSearchQuery != value)
+                if (m_Status != value)
                 {
-                    imageSearchQuery = value;
+                    m_Status = value;
+                    OnPropertyChange("Status");
+                }
+            }
+        }
+
+        public string ImageSearchQuery
+        {
+            get { return m_imageSearchQuery; }
+            set
+            {
+                if (m_imageSearchQuery != value)
+                {
+                    m_imageSearchQuery = value;
                     OnPropertyChange("ImageSearchQuery");
                 }
             }
@@ -126,6 +148,7 @@ namespace ImageSearch.ViewModel
             }
             set
             {
+                Status = "Searching ...";
                 m_searchCommand.Execute(null);
                 OnPropertyChange("SearchCommand");
             }
@@ -133,13 +156,18 @@ namespace ImageSearch.ViewModel
 
         private async void Search()
         {
+            DateTime curDateTime = DateTime.Now;
             IServiceComponent serviceComponent = m_ServiceComponentFactory.CreateSingleton(m_AppConfig.CurrentDataSourceSelection);
             IQueryContext queryContext = new QueryContext();
             queryContext.ApplicationConfiguration = m_AppConfig;
             queryContext.QueryParam = ImageSearchQuery;
+            Status = "Performing Search...";
             IResponseContext respContext = await serviceComponent.PerformSearch(queryContext);
             PopulateFlickerDataFields(respContext);
             PopulateNewsAPIDataFields(respContext);
+            TimeSpan performance = DateTime.Now - curDateTime;
+            
+            Status = String.Format("Completed query in {0}:{1} seconds",  performance.Seconds, performance.Milliseconds);
         }
     }
 }

@@ -1,36 +1,58 @@
-﻿using ImageSearch.Common;
-using ImageSearch.DataModel;
+﻿using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent.Contracts;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
 
 namespace ImageSearch.ViewModel
 {
+    /// <summary>
+    /// Partial class for Flicker view model
+    /// </summary>
     public partial class ImageSearchViewModel
     {
+        #region Private variables
+        /// <summary>
+        /// Size of the thumbnail image
+        /// </summary>
         private Size m_Size;
-        public ObservableCollection<ListViewDataModel> m_ImageResponseURICollection;
+        /// <summary>
+        /// URI data for thumbnail display
+        /// </summary>
+        private ObservableCollection<ThumbnailData> m_ImageResponseURICollection;
+        /// <summary>
+        /// Display options like - small medium large
+        /// </summary>
         private ObservableCollection<string> m_DisplayOptions;
+        /// <summary>
+        /// Currently selected option
+        /// </summary>
+        private string m_CurrentThumbnailDisplayOption;
 
+        #endregion Private variables
 
+        #region Init
+
+        /// <summary>
+        /// Initialized flicker specific view control values
+        /// </summary>
         public void InitializeFlickerData()
         {
-            m_Size = new Size();
-            m_Size.Height = 128;
-            m_Size.Width = 128;
-
+            m_Size = new Size() { Height = 128, Width = 128 }; //initialize to small by default
 
             m_DisplayOptions = new ObservableCollection<string>();
-            m_DisplayOptions.Add("Small");
-            m_DisplayOptions.Add("Medium");
-            m_DisplayOptions.Add("Large");
+            m_DisplayOptions.Add(ThumbnailDisplaySize.SMALL);
+            m_DisplayOptions.Add(ThumbnailDisplaySize.MEDIUM);
+            m_DisplayOptions.Add(ThumbnailDisplaySize.LARGE);
 
             OnPropertyChange("ThumbnailDisplayOptions");
-
         }
 
+        #endregion Init
+
+        #region View model binding Properties
+
+        /// <summary>
+        /// Thumbnail image size - small medium large
+        /// </summary>
         public Size ImageSize
         {
             get { return m_Size; }
@@ -40,13 +62,16 @@ namespace ImageSearch.ViewModel
                 {
                     m_Size = value;
                     OnPropertyChange("ImageSize");
-
+                    //If image size is updated, reload the view for images in new size also
                     OnPropertyChange("ImageResponseURICollection");
                 }
             }
 
         }
 
+        /// <summary>
+        /// Thumbnail display optiosn available - small medium large
+        /// </summary>
         public ObservableCollection<string> ThumbnailDisplayOptions
         {
             get { return m_DisplayOptions; }
@@ -57,9 +82,27 @@ namespace ImageSearch.ViewModel
             }
         }
 
+        /// <summary>
+        /// Currently seected thumbnail display options. Once this is changed, upate the corresponsing size also.
+        /// </summary>
+        public string CurrentThumbnailDisplayOption
+        {
+            get { return m_CurrentThumbnailDisplayOption; }
+            set
+            {
+                m_CurrentThumbnailDisplayOption = value;
+                OnPropertyChange("CurrentThumbnailDisplayOption");
 
+                //Once display option is changed, update the image size also for the image 
+                UpdateImageSize();
 
-        public ObservableCollection<ListViewDataModel> ImageResponseURICollection
+            }
+        }
+
+        /// <summary>
+        /// Data required to display in the flicker control. as of now only URl of the image is returned
+        /// </summary>
+        public ObservableCollection<ThumbnailData> ImageResponseURICollection
         {
             get { return m_ImageResponseURICollection; }
             set
@@ -67,25 +110,70 @@ namespace ImageSearch.ViewModel
                 m_ImageResponseURICollection = value;
             }
         }
+
+        #endregion View model binding Properties
+
+        #region private methods
+
+
+        /// <summary>
+        /// From the resoponse from server, check if it is valid for flicker controls, if yes, assign appropriate data controls
+        /// </summary>
+        /// <param name="response"></param>
         private void PopulateFlickerDataFields(IResponseContext response)
         {
 
             ImageResponseDataModel respContext = response as ImageResponseDataModel;
             if (respContext != null)
             {
-                m_ImageResponseURICollection = new ObservableCollection<ListViewDataModel>();
-
-                m_ImageResponseURICollection = new ObservableCollection<ListViewDataModel>();
+                m_ImageResponseURICollection = new ObservableCollection<ThumbnailData>();
 
                 foreach (string str in respContext.URI)
                 {
-                    ListViewDataModel lc = new ListViewDataModel();
-                    lc.URI = str;
-                    m_ImageResponseURICollection.Add(lc);
+                    ThumbnailData thumbnailData = new ThumbnailData();
+                    thumbnailData.URI = str;
+                    m_ImageResponseURICollection.Add(thumbnailData);
                 }
                 OnPropertyChange("ImageResponseURICollection");
+
+                //Update any status - error etc
+                m_Status = respContext.Status;
+                OnPropertyChange("Status");
+
+            }
+        }
+
+        /// <summary>
+        /// Update thumbnail size based on selection
+        /// </summary>
+        private void UpdateImageSize()
+        {
+            string currentDisplayMode = CurrentThumbnailDisplayOption;
+            int iSize = 128;//default
+            switch (currentDisplayMode)
+            {
+                case ThumbnailDisplaySize.SMALL:
+                    iSize = 128;
+                    break;
+                case ThumbnailDisplaySize.MEDIUM://small
+                    iSize = 256;
+                    break;
+                case ThumbnailDisplaySize.LARGE://small
+                    iSize = 512;
+                    break;
+                default:
+                    break;
             }
 
+            ImageSize.Height = iSize;
+            ImageSize.Width = iSize;
+
+            OnPropertyChange("ImageSize");
+            //If image size is updated, reload the view for images in new size also
+            OnPropertyChange("ImageResponseURICollection");
         }
+
+        #endregion private methods
+
     }
 }

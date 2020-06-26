@@ -24,7 +24,7 @@ namespace ImageSearch.ServiceComponent
             ApplicationConfiguration appConfig = queryContext.ApplicationConfiguration;
             IDataSource ds = appConfig.GetDataSource(DataSources.NewsAPI);
             //sample query : "http://newsapi.org/v2/everything?" + "q=Nature&apiKey=a56eae9e984a40b2a88c2eb097427e4b";
-            string finalURI = ds.DataSourceURI + queryContext.QueryParam;
+            string finalURI = ds.DataSourceURI + "?q=" + queryContext.QueryParam + "&apiKey=a56eae9e984a40b2a88c2eb097427e4b";
             HTTPAPIResponse response = await HttpRestAPIHelper.Get(finalURI) as HTTPAPIResponse;
 
             IResponseContext searchResponse = ParseResponse(response);
@@ -37,6 +37,7 @@ namespace ImageSearch.ServiceComponent
             if(response.Code != ErrorCodes.NoError)
             {
                 responseDataModel.NewsItems = new ObservableCollection<Articles>();
+                responseDataModel.Status = "Error in receiving response from server";
                 return responseDataModel;//in case of exception, list wil be empty
             }
 
@@ -56,6 +57,8 @@ namespace ImageSearch.ServiceComponent
             {
                 Logger.Log("Exception while parsing response from NewsAPI. Details:" + exp.ToString());
                 responseDataModel.NewsItems = new ObservableCollection<Articles>();
+                responseDataModel.Status = "Error in parsing response from server";
+
                 //in case of exception list wil be empty
             }
 

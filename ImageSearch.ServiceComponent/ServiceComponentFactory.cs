@@ -1,16 +1,26 @@
-﻿using ImageSearch.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ImageSearch.Common;
 
 namespace ImageSearch.ServiceComponent.Contracts
 {
+    /// <summary>
+    /// Factory to create service component.
+    /// </summary>
     public class ServiceComponentFactory : AbstractServiceComponentFactory
     {
+        /// <summary>
+        /// creates object first time and caches it
+        /// </summary>
         Dictionary<DataSources, IServiceComponent> myServiceComponentPool = new Dictionary<DataSources, IServiceComponent>();
 
+        /// <summary>
+        /// Create the servicecomponent innstace based on datasource passed. If already instantiates, it willbe returned.
+        /// Not thread safe. 
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <returns></returns>
         public IServiceComponent CreateSingleton(DataSources dataSource)
         {
             if (myServiceComponentPool.Keys.Contains(dataSource))

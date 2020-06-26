@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationConfiguration.cs" />
+    <Compile Include="CommonData.cs" />
     <Compile Include="IDataSource.cs" />
     <Compile Include="IHttpResponse.cs" />
     <Compile Include="Logger.cs" />

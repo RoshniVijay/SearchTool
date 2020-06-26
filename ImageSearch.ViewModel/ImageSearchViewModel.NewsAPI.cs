@@ -3,48 +3,65 @@ using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
 using ImageSearch.ServiceComponent.Contracts;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
 
 namespace ImageSearch.ViewModel
 {
+    /// <summary>
+    /// View model partial class fot News API display
+    /// </summary>
     public partial class ImageSearchViewModel
     {
-        private ObservableCollection<ListViewDataModel> m_URL;
+        #region private variables
 
+        private ObservableCollection<Articles> m_NewsData;
+
+        #endregion private variables
+
+        #region Init
 
         public void InitializeNewsAPIData()
         {
-            m_URL = new ObservableCollection<ListViewDataModel>();
+            m_NewsData = new ObservableCollection<Articles>();
         }
 
+        #endregion Init
 
-        public ObservableCollection<ListViewDataModel> URL
+        #region public properties
+
+        /// <summary>
+        /// Response for news items display. Has members for title, description, link etc
+        /// </summary>
+        public ObservableCollection<Articles> NewsItemsResponseCollection
         {
-            get { return m_URL; }
+            get { return m_NewsData; }
             set
             {
-
-                m_URL = value;
-                OnPropertyChange("URL");
+                m_NewsData = value;
+                OnPropertyChange("NewsItemsResponseCollection");
             }
         }
 
+        #endregion public properties
+
+        #region private methods
+
+        /// <summary>
+        /// Populates the response to viewmodel properties that are relevant to news display
+        /// </summary>
+        /// <param name="response"></param>
         private void PopulateNewsAPIDataFields(IResponseContext response)
         {
             TextResponseDataModel respContext = response as TextResponseDataModel;
             if (respContext != null)
             {
-                m_ImageResponseURICollection = new ObservableCollection<ListViewDataModel>();
-
-                foreach (Articles str in respContext.NewsItems)
-                {
-                    ListViewDataModel lc = new ListViewDataModel();
-                    lc.URI = str.Author;
-                    m_ImageResponseURICollection.Add(lc);
-                }
-                OnPropertyChange("ImageResponseURICollection");
+                m_NewsData = respContext.NewsItems;
+                OnPropertyChange("NewsItemsResponseCollection");
             }
+
+            //Update any status - error etc
+            m_Status = respContext.Status;
+            OnPropertyChange("Status");
         }
+        #endregion
     }
 }

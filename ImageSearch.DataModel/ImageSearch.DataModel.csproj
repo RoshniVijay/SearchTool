@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewsApiResponse.cs" />
+    <Compile Include="CommonDataModel.cs" />
     <Compile Include="NewsResponseContext.cs" />
     <Compile Include="TextResponseDataModel.cs" />
     <Compile Include="QueryContext.cs" />
-    <Compile Include="ImageResponseDataModel.cs" />
+    <Compile Include="FlickerDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

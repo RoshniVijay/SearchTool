@@ -31,12 +31,23 @@ namespace ImageSearch.ServiceComponent
             return searchResponse;
         }
 
+        /// <summary>
+        /// Sample response that has to be parsed:
+        /// <entry>
+        /// <title>
+        ///  <link rel="enclosure" type="image/jpeg" href="https://live.staticflickr.com/65535/50044712313_aefaa149b2_b.jpg" />
+        /// </title>
+        /// </entry>
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
         private IResponseContext ParseResponse(HTTPAPIResponse response)
         {
             ImageResponseDataModel responseDataModel = new ImageResponseDataModel();
             if(response.Code != ErrorCodes.NoError)
             {
                 responseDataModel.URI = new ObservableCollection<string>();
+                responseDataModel.Status = "Error in receiving response from server";
                 return responseDataModel;//in case of exception list wil be empty
             }
 
@@ -65,11 +76,14 @@ namespace ImageSearch.ServiceComponent
                     }
                 }
                 responseDataModel.URI = imageURICol;
+                Logger.Log("Successfully parsed flicker response");
             }
             catch (Exception exp)
             {
                 Logger.Log("Exception while parsing response from flicker. Details:" + exp.ToString());
                 responseDataModel.URI = new ObservableCollection<string>();
+                responseDataModel.Status = "Error in parsing response from server";
+
                 //in case of exception list wil be empty
             }
 

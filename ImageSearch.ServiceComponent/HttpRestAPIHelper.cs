@@ -1,21 +1,24 @@
-﻿using ImageSearch.DataModel.Contracts;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml;
 using ImageSearch.DataModel;
-using System.Collections.ObjectModel;
 using ImageSearch.Common;
-using System.IO;
+using ImageSearch.DataModel.Contracts;
 
 namespace ImageSearch.ServiceComponent.Utilities
 {
+    /// <summary>
+    /// Rest client to make GET API call
+    /// </summary>
     public static class HttpRestAPIHelper
     {
         private static HttpClient client = new HttpClient();
+
+        /// <summary>
+        /// Rest GET call
+        /// </summary>
+        /// <param name="uri">fully formatted URL</param>
+        /// <returns></returns>
         public static async Task<IHttpAPIResponse> Get(string uri)
         {
             HTTPAPIResponse httpResp = new HTTPAPIResponse();

@@ -4,9 +4,19 @@ using System.Collections.Generic;
 
 namespace ImageSearch.DataModel
 {
+    /// <summary>
+    /// Response after parsing news API
+    /// </summary>
+    public class NewsApiResponse
+    {
+        public List<Articles> Articles { get; set; }
+    }
+
+    /// <summary>
+    /// Article is the json representatoion of newsapi reponse
+    /// </summary>
     public class Articles
     {
-        public Source Source { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -15,9 +25,5 @@ namespace ImageSearch.DataModel
         public DateTime? PublishedAt { get; set; }
     }
 
-    public class Source
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+
 }

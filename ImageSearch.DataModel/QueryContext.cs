@@ -3,6 +3,9 @@ using ImageSearch.Common;
 
 namespace ImageSearch.DataModel
 {
+    /// <summary>
+    /// Query data
+    /// </summary>
     public class QueryContext : IQueryContext
     {
         public string QueryParam { get; set; }
