@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonDataModel.cs" />
-    <Compile Include="NewsResponseContext.cs" />
+    <Compile Include="Articles.cs" />
+    <Compile Include="TabItem.cs" />
+    <Compile Include="HTTPAPIResponse.cs" />
+    <Compile Include="NewsApiResponse.cs" />
+    <Compile Include="Size.cs" />
     <Compile Include="TextResponseDataModel.cs" />
     <Compile Include="QueryContext.cs" />
-    <Compile Include="FlickerDataModel.cs" />
+    <Compile Include="ImageResponseDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThumbnailData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">

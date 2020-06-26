@@ -34,14 +34,14 @@ namespace ImageSearch.ViewModel
         /// <summary>
         /// Initialized flicker specific view control values
         /// </summary>
-        public void InitializeFlickerData()
+        private void InitializeFlickerData()
         {
             m_Size = new Size() { Height = 128, Width = 128 }; //initialize to small by default
 
-            m_DisplayOptions = new ObservableCollection<string>();
-            m_DisplayOptions.Add(ThumbnailDisplaySize.SMALL);
-            m_DisplayOptions.Add(ThumbnailDisplaySize.MEDIUM);
-            m_DisplayOptions.Add(ThumbnailDisplaySize.LARGE);
+            m_DisplayOptions = new ObservableCollection<string>
+            {
+                ThumbnailDisplaySize.SMALL, ThumbnailDisplaySize.MEDIUM, ThumbnailDisplaySize.LARGE
+            };
 
             OnPropertyChange("ThumbnailDisplayOptions");
         }
@@ -55,7 +55,7 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public Size ImageSize
         {
-            get { return m_Size; }
+            get => m_Size;
             set
             {
                 if (m_Size != value)
@@ -70,11 +70,11 @@ namespace ImageSearch.ViewModel
         }
 
         /// <summary>
-        /// Thumbnail display optiosn available - small medium large
+        /// Thumbnail display options available - small medium large
         /// </summary>
         public ObservableCollection<string> ThumbnailDisplayOptions
         {
-            get { return m_DisplayOptions; }
+            get => m_DisplayOptions;
             set
             {
                 m_DisplayOptions = value;
@@ -83,11 +83,11 @@ namespace ImageSearch.ViewModel
         }
 
         /// <summary>
-        /// Currently seected thumbnail display options. Once this is changed, upate the corresponsing size also.
+        /// Currently selected thumbnail display options. Once this is changed, update the corresponding size also.
         /// </summary>
         public string CurrentThumbnailDisplayOption
         {
-            get { return m_CurrentThumbnailDisplayOption; }
+            get => m_CurrentThumbnailDisplayOption;
             set
             {
                 m_CurrentThumbnailDisplayOption = value;
@@ -104,11 +104,8 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public ObservableCollection<ThumbnailData> ImageResponseURICollection
         {
-            get { return m_ImageResponseURICollection; }
-            set
-            {
-                m_ImageResponseURICollection = value;
-            }
+            get => m_ImageResponseURICollection;
+            set => m_ImageResponseURICollection = value;
         }
 
         #endregion View model binding Properties
@@ -122,16 +119,13 @@ namespace ImageSearch.ViewModel
         /// <param name="response"></param>
         private void PopulateFlickerDataFields(IResponseContext response)
         {
-
-            ImageResponseDataModel respContext = response as ImageResponseDataModel;
-            if (respContext != null)
+            if (response is ImageResponseDataModel respContext)
             {
                 m_ImageResponseURICollection = new ObservableCollection<ThumbnailData>();
 
                 foreach (string str in respContext.URI)
                 {
-                    ThumbnailData thumbnailData = new ThumbnailData();
-                    thumbnailData.URI = str;
+                    ThumbnailData thumbnailData = new ThumbnailData {URI = str};
                     m_ImageResponseURICollection.Add(thumbnailData);
                 }
                 OnPropertyChange("ImageResponseURICollection");

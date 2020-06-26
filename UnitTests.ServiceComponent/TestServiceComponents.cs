@@ -14,12 +14,12 @@ namespace UnitTests.ServiceComponent
     public class TestServiceComponents
     {
         /// <summary>
-        /// Tests the create factory  method to check if correct instance aare reurned during repeated calls
+        /// Tests the create factory  method to check if correct instance are returned during repeated calls
         /// </summary>
         [TestMethod]
         public void Test_CreateSingleton_Positive()
         {
-            AbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
             IServiceComponent serviceComponent = serviceFactory.CreateSingleton(DataSources.Flicker);
             Assert.IsTrue(serviceComponent is FlickerSearchServiceComponent);
 
@@ -38,7 +38,7 @@ namespace UnitTests.ServiceComponent
             Assert.IsTrue(serviceComponent5 is NewsAPISearchServiceComponent);
             Assert.AreSame(serviceComponent5, serviceComponent4);
 
-            AbstractServiceComponentFactory serviceFactory6 = new ServiceComponentFactory();
+            IAbstractServiceComponentFactory serviceFactory6 = new ServiceComponentFactory();
             IServiceComponent serviceComponent6 = serviceFactory.CreateSingleton(DataSources.Flicker);
             Assert.IsTrue(serviceComponent6 is FlickerSearchServiceComponent);
             Assert.AreSame(serviceComponent, serviceComponent6);
@@ -51,7 +51,7 @@ namespace UnitTests.ServiceComponent
         [ExpectedException(typeof(ArgumentException))]
         public async Task Test_FlickerServiceComponent_Negative()
         {
-            AbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
             IServiceComponent serviceComponent = serviceFactory.CreateSingleton(DataSources.Flicker);
             IQueryContext queryContext = new QueryContext();
             queryContext.ApplicationConfiguration = null;
@@ -61,7 +61,7 @@ namespace UnitTests.ServiceComponent
         }
 
         /// <summary>
-        /// Tests the create factory  method to check if correct instance aare reurned during repeated calls
+        /// Tests the create factory  method to check if correct instance are returned during repeated calls
         /// </summary>
         [TestMethod]
         public async Task Test_FlickerServiceComponent_Positive()
@@ -76,7 +76,7 @@ namespace UnitTests.ServiceComponent
             Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
             mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
 
-            AbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
             IServiceComponent serviceComponent = new FlickerSearchServiceComponent();
             IResponseContext rc = await serviceComponent.PerformSearch(qc);
 
@@ -85,7 +85,7 @@ namespace UnitTests.ServiceComponent
         }
 
         /// <summary>
-        /// Tests the create factory  method to check if correct instance aare reurned during repeated calls
+        /// Tests the create factory  method to check if correct instance are returned during repeated calls
         /// </summary>
         [TestMethod]
         public async Task Test_NewsAPIServiceComponent_Positive()
@@ -100,7 +100,7 @@ namespace UnitTests.ServiceComponent
             Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
             mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
 
-            AbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IAbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
             IServiceComponent serviceComponent = new NewsAPISearchServiceComponent();
             IResponseContext rc = await serviceComponent.PerformSearch(qc);
 

@@ -17,7 +17,7 @@ namespace ImageSearch.ViewModel
 
         #region Init
 
-        public void InitializeNewsAPIData()
+        private void InitializeNewsAPIData()
         {
             m_NewsData = new ObservableCollection<Articles>();
         }
@@ -31,7 +31,10 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public ObservableCollection<Articles> NewsItemsResponseCollection
         {
-            get { return m_NewsData; }
+            get
+            {
+                return m_NewsData;
+            }
             set
             {
                 m_NewsData = value;
@@ -49,8 +52,7 @@ namespace ImageSearch.ViewModel
         /// <param name="response"></param>
         private void PopulateNewsAPIDataFields(IResponseContext response)
         {
-            TextResponseDataModel respContext = response as TextResponseDataModel;
-            if (respContext != null)
+            if (response is TextResponseDataModel respContext)
             {
                 m_NewsData = respContext.NewsItems;
                 OnPropertyChange("NewsItemsResponseCollection");

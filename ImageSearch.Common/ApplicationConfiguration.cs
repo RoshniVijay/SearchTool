@@ -9,7 +9,7 @@ namespace ImageSearch.Common
     /// </summary>
     public class ApplicationConfiguration
     {
-        private IDictionary<DataSources, IDataSource> m_AvailableDataSources = new Dictionary<DataSources, IDataSource>();
+        private readonly IDictionary<DataSources, IDataSource> m_AvailableDataSources = new Dictionary<DataSources, IDataSource>();
 
         public ApplicationConfiguration()
         {
@@ -24,7 +24,7 @@ namespace ImageSearch.Common
         /// </summary>
         /// <param name="dataSource"></param>
         /// <param name="bSelectionFlag"></param>
-        public void SelectDataSource(DataSources dataSource, bool bSelectionFlag)
+        private void SelectDataSource(DataSources dataSource, bool bSelectionFlag)
         {
             m_AvailableDataSources[dataSource].IsSelected = bSelectionFlag;
         }
@@ -51,7 +51,7 @@ namespace ImageSearch.Common
         /// <summary>
         /// Sets and gets current selected datasource 
         /// </summary>
-        public DataSources CurrentDataSourceSelection { get; set; }
+        public DataSources CurrentDataSourceSelection { get; private set; }
 
         /// <summary>
         /// Sets the current data source based on string passed

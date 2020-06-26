@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
+    <Compile Include="ThumbnailDisplaySize.cs" />
     <Compile Include="ImageSearchViewModel.NewsAPI.cs" />
     <Compile Include="ImageSearchViewModel.Flicker.cs" />
     <Compile Include="ImageSearchViewModel.MainView.cs" />

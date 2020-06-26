@@ -5,6 +5,7 @@ using System.Windows.Input;
 using ImageSearch.Common;
 using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
+using ImageSearch.ServiceComponent;
 using ImageSearch.ServiceComponent.Contracts;
 
 namespace ImageSearch.ViewModel
@@ -35,7 +36,7 @@ namespace ImageSearch.ViewModel
         /// <summary>
         /// Application Configuration
         /// </summary>
-        private ApplicationConfiguration m_AppConfig;
+        private readonly ApplicationConfiguration m_AppConfig;
         /// <summary>
         /// Currently selected data source in UI - flicker/twitter/NewsAPI etc
         /// </summary>
@@ -43,7 +44,7 @@ namespace ImageSearch.ViewModel
         /// <summary>
         /// AbstractFactory for biz logic component
         /// </summary>
-        private AbstractServiceComponentFactory m_ServiceComponentFactory;
+        private readonly IAbstractServiceComponentFactory m_ServiceComponentFactory;
         /// <summary>
         /// Search command triggered by search in UI
         /// </summary>
@@ -88,10 +89,7 @@ namespace ImageSearch.ViewModel
 
         protected void OnPropertyChange(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region properties
@@ -102,7 +100,7 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public string CurrentDataSourceSelection
         {
-            get { return m_CurrentSelectedDataSource; }
+            get => m_CurrentSelectedDataSource;
             set
             {
                 if (m_CurrentSelectedDataSource != value)
@@ -121,10 +119,7 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public ObservableCollection<string> DataSourceCollection
         {
-            get
-            {
-                return m_DataSourceCollection;
-            }
+            get => m_DataSourceCollection;
             set
             {
 
@@ -138,7 +133,7 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public string Status
         {
-            get { return m_Status; }
+            get => m_Status;
             set
             {
                 if (m_Status != value)
@@ -154,7 +149,7 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public string ImageSearchQuery
         {
-            get { return m_imageSearchQuery; }
+            get => m_imageSearchQuery;
             set
             {
                 if (m_imageSearchQuery != value)
@@ -170,14 +165,7 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public ICommand SearchCommand
         {
-            get
-            {
-                if (m_searchCommand == null)
-                {
-                    m_searchCommand = new SearchCommand(Search);
-                }
-                return m_searchCommand;
-            }
+            get { return m_searchCommand ?? (m_searchCommand = new SearchCommand(Search)); }
             set
             {
                 Status = "Searching ...";
@@ -204,7 +192,7 @@ namespace ImageSearch.ViewModel
             PopulateNewsAPIDataFields(respContext);
             TimeSpan performance = DateTime.Now - curDateTime;
             
-            Status = String.Format("Completed query in {0}:{1} seconds",  performance.Seconds, performance.Milliseconds);
+            Status = $"Completed query in {performance.Seconds}:{performance.Milliseconds} seconds";
         }
     }
 }

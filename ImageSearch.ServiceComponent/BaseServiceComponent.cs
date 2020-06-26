@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Xml;
-using ImageSearch.Common;
-using ImageSearch.DataModel;
-using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent.Contracts;
+﻿using ImageSearch.ServiceComponent.Contracts;
 using ImageSearch.ServiceComponent.Utilities;
 
 namespace ImageSearch.ServiceComponent
@@ -15,9 +8,9 @@ namespace ImageSearch.ServiceComponent
     /// </summary>
     public class BaseServiceComponent 
     {
-        protected IHttpRestAPIHelper m_HttpAPIHelper;
+        protected readonly IHttpRestAPIHelper m_HttpAPIHelper;
 
-        public BaseServiceComponent()
+        protected BaseServiceComponent()
         {
             m_HttpAPIHelper = new HttpRestAPIHelper();
         }

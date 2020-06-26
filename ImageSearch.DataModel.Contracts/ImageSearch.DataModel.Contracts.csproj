@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IHttpResponse.cs" />
+    <Compile Include="ErrorCodes.cs" />
+    <Compile Include="IHttpAPIResponse.cs" />
     <Compile Include="IResponseContext.cs" />
     <Compile Include="IQueryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

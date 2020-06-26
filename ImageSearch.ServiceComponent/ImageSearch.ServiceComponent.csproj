@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseServiceComponent.cs" />
-    <Compile Include="NewsAPIServiceComponent.cs" />
+    <Compile Include="NewsAPISearchServiceComponent.cs" />
     <Compile Include="FlickerSearchServiceComponent.cs" />
     <Compile Include="HttpRestAPIHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using ImageSearch.Common;
+using ImageSearch.ServiceComponent.Contracts;
 
-namespace ImageSearch.ServiceComponent.Contracts
+namespace ImageSearch.ServiceComponent
 {
     /// <summary>
     /// Factory to create service component.
     /// </summary>
-    public class ServiceComponentFactory : AbstractServiceComponentFactory
+    public class ServiceComponentFactory : IAbstractServiceComponentFactory
     {
         /// <summary>
         /// creates object first time and caches it
         /// </summary>
-        Dictionary<DataSources, IServiceComponent> myServiceComponentPool = new Dictionary<DataSources, IServiceComponent>();
+        private readonly Dictionary<DataSources, IServiceComponent> myServiceComponentPool = new Dictionary<DataSources, IServiceComponent>();
 
         /// <summary>
-        /// Create the servicecomponent innstace based on datasource passed. If already instantiates, it willbe returned.
+        /// Create the servicecomponent instance based on datasource passed. If already instantiates, it will be returned.
         /// Not thread safe. 
         /// </summary>
         /// <param name="dataSource"></param>

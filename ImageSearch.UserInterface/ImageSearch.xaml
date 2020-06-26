@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:ImageSearch.View"
         mc:Ignorable="d"
         Title="I m a g e  S e a r c h" Height="800" Width="1160" Background="#FF535050" Foreground="#FFDC7070" FontFamily="Trebuchet MS" FontWeight="Bold" ResizeMode="NoResize">
-    <Grid RenderTransformOrigin="0.621,0.435">
+    <Grid RenderTransformOrigin="0.621,0.435" SnapsToDevicePixels="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="310*"/>
             <ColumnDefinition Width="41*"/>
             <ColumnDefinition Width="801*"/>
         </Grid.ColumnDefinitions>
-        <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,20,384,730" Grid.ColumnSpan="3"/>
+        <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,20,384,728" Grid.ColumnSpan="3"/>
         <ComboBox Name="m_DataSourceCombo" HorizontalAlignment="Left" Margin="454,20,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}" SelectedItem="{Binding CurrentDataSourceSelection}" SelectionChanged="OnDataSourceSelectionChanged" Grid.Column="2"/>
-        <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="628,20,44,730" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
+        <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="628,20,44,728" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
         <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078" RenderTransformOrigin="0.5,0.5" Loaded="OnTabControlLoad" Grid.ColumnSpan="3">
             <TabItem Header="{Binding CurrentDataSourceSelection}">
                 <Grid>
@@ -60,6 +60,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Label Content="{Binding Status}" HorizontalAlignment="Left" Margin="0,751,0,0" VerticalAlignment="Top" Width="1152" Height="22" Grid.ColumnSpan="3"/>
+        <Label Content="{Binding Status}" Foreground="White" HorizontalAlignment="Left" Margin="0,751,0,0" VerticalAlignment="Top" Width="1152" Height="22" Grid.ColumnSpan="3"/>
     </Grid>
 </Window>

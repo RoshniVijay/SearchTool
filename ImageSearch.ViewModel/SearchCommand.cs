@@ -11,7 +11,7 @@ namespace ImageSearch.ViewModel
         #region ICommand implementaton
 
         public event EventHandler CanExecuteChanged;
-        private Action m_searchAction;
+        private readonly Action m_searchAction;
 
         #endregion ICOmmand implementaton
 
@@ -21,7 +21,7 @@ namespace ImageSearch.ViewModel
         /// <summary>
         /// Search Command. Uses the injected Action to callback on UI trigger
         /// </summary>
-        /// <param name="searchAction">callback to execure on trigger</param>
+        /// <param name="searchAction">callback to execute on trigger</param>
         public SearchCommand(Action searchAction)
         {
             m_searchAction = searchAction;
@@ -38,7 +38,7 @@ namespace ImageSearch.ViewModel
         }
 
         /// <summary>
-        /// Actual action.triggeres the action injected in constructor
+        /// Actual action.triggers the action injected in constructor
         /// </summary>
         /// <param name="parameter"></param>
         public void Execute(object parameter)

@@ -11,28 +11,14 @@ namespace ImageSearch.ServiceComponent.Utilities
     /// <summary>
     /// Rest client to make GET API call
     /// </summary>
-    internal class HttpRestAPIHelper : IHttpRestAPIHelper, IDisposable
+    internal class HttpRestAPIHelper : IHttpRestAPIHelper
     {
-        private HttpClient m_HttpClient;
-        private bool m_bDisposed;
+        private readonly HttpClient m_HttpClient;
 
         public HttpRestAPIHelper()
         {
             m_HttpClient = new HttpClient();
         }
-
-        public void Dispose()
-        {
-            if (m_bDisposed)
-            {
-                return;
-            }
-
-            // Dispose managed state (managed objects).
-            m_HttpClient?.Dispose();
-            m_HttpClient = null;
-        }
-    
 
         /// <summary>
         /// Rest GET call
@@ -49,9 +35,9 @@ namespace ImageSearch.ServiceComponent.Utilities
                 HttpResponseMessage response = await m_HttpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    Logger.Log("HTTP call succedded. URL:" + uri);
-                    string responseStream = await response.Content.ReadAsStringAsync();
-                    httpResp.ResponseString = responseStream;
+                    Logger.Log("HTTP call succeeded. URL:" + uri);
+                    string responseStringm = await response.Content.ReadAsStringAsync();
+                    httpResp.ResponseString = responseStringm;
                 }
                 else
                 {
@@ -61,8 +47,8 @@ namespace ImageSearch.ServiceComponent.Utilities
             }
             catch (Exception exp)
             {
-                Logger.Log("Exception while calling HTTP Get for URI" + uri + "Details:" + exp.ToString());
-                errorCode = ErrorCodes.IternalException;
+                Logger.Log("Exception while calling HTTP Get for URI" + uri + "Details:" + exp);
+                errorCode = ErrorCodes.InternalException;
             }
             httpResp.Code = errorCode;
             return httpResp;

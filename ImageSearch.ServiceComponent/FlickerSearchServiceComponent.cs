@@ -6,7 +6,6 @@ using ImageSearch.Common;
 using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
 using ImageSearch.ServiceComponent.Contracts;
-using ImageSearch.ServiceComponent.Utilities;
 
 namespace ImageSearch.ServiceComponent
 {
@@ -22,9 +21,9 @@ namespace ImageSearch.ServiceComponent
         /// <param name="queryContext"></param>
         public async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
         {
-            if(queryContext == null || queryContext.ApplicationConfiguration == null || queryContext.QueryParam == null)
+            if(queryContext?.ApplicationConfiguration == null || queryContext.QueryParam == null)
             {
-                throw new ArgumentException("Invalid argument passed to method FlickerSearchServiceComponent.PerformSearch", "queryContext");
+                throw new ArgumentException("Invalid argument passed to method FlickerSearchServiceComponent.PerformSearch", nameof(queryContext));
             }
             ApplicationConfiguration appConfig = queryContext.ApplicationConfiguration;
             IDataSource ds = appConfig.GetDataSource(DataSources.Flicker);
@@ -70,7 +69,7 @@ namespace ImageSearch.ServiceComponent
                     while (childNodes.MoveNext())
                     {
                         XmlNode curNode = (XmlNode)childNodes.Current;
-                        if (curNode.Name == "link")
+                        if (curNode?.Name == "link")
                         {
                             XmlNode hrefNode = curNode.Attributes.GetNamedItem("type");
                             if (hrefNode.Value == "image/jpeg")
@@ -86,7 +85,7 @@ namespace ImageSearch.ServiceComponent
             }
             catch (Exception exp)
             {
-                Logger.Log("Exception while parsing response from flicker. Details:" + exp.ToString());
+                Logger.Log("Exception while parsing response from flicker. Details:" + exp);
                 responseDataModel.URI = new ObservableCollection<string>();
                 responseDataModel.Status = "Error in parsing response from server";
 
