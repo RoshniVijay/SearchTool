@@ -5,7 +5,6 @@ using ImageSearch.Common;
 using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
 using ImageSearch.ServiceComponent.Contracts;
-using ImageSearch.ServiceComponent.Utilities;
 using Newtonsoft.Json;
 
 namespace ImageSearch.ServiceComponent
@@ -13,7 +12,7 @@ namespace ImageSearch.ServiceComponent
     /// <summary>
     /// Component to make specific query to NewsAPI server
     /// </summary>
-    public class NewsAPISearchServiceComponent : IServiceComponent
+    public class NewsAPISearchServiceComponent : BaseServiceComponent, IServiceComponent
     {
         /// <summary>
         /// API to perform NewsAPI search
@@ -25,7 +24,7 @@ namespace ImageSearch.ServiceComponent
             IDataSource ds = appConfig.GetDataSource(DataSources.NewsAPI);
             //sample query : "http://newsapi.org/v2/everything?" + "q=Nature&apiKey=a56eae9e984a40b2a88c2eb097427e4b";
             string finalURI = ds.DataSourceURI + "?q=" + queryContext.QueryParam + "&apiKey=a56eae9e984a40b2a88c2eb097427e4b";
-            HTTPAPIResponse response = await HttpRestAPIHelper.Get(finalURI) as HTTPAPIResponse;
+            HTTPAPIResponse response = await m_HttpAPIHelper.Get(finalURI) as HTTPAPIResponse;
 
             IResponseContext searchResponse = ParseResponse(response);
             return searchResponse;
@@ -52,6 +51,7 @@ namespace ImageSearch.ServiceComponent
                 }
                 
                 responseDataModel.NewsItems = articleCol;
+                responseDataModel.Status = "Parsed response successfully";
             }
             catch (Exception exp)
             {

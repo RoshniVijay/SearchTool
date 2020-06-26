@@ -13,8 +13,9 @@ namespace ImageSearch.ServiceComponent
     /// <summary>
     /// Component to make specific query to Flicker server
     /// </summary>
-    public class FlickerSearchServiceComponent : IServiceComponent
+    public class FlickerSearchServiceComponent : BaseServiceComponent, IServiceComponent
     {
+        
         /// <summary>
         /// API to perform flicker search
         /// </summary>
@@ -23,13 +24,13 @@ namespace ImageSearch.ServiceComponent
         {
             if(queryContext == null || queryContext.ApplicationConfiguration == null || queryContext.QueryParam == null)
             {
-                throw new ArgumentException("Invalid argument passed to method FlickerSearchServiceComponent.PerformSearch");
+                throw new ArgumentException("Invalid argument passed to method FlickerSearchServiceComponent.PerformSearch", "queryContext");
             }
             ApplicationConfiguration appConfig = queryContext.ApplicationConfiguration;
             IDataSource ds = appConfig.GetDataSource(DataSources.Flicker);
             //sample query : https://www.flickr.com/services/feeds/photos_public.gne?tags=Nature
             string finalURI = ds.DataSourceURI + "?tags=" + queryContext.QueryParam;
-            HTTPAPIResponse response = await HttpRestAPIHelper.Get(finalURI) as HTTPAPIResponse;
+            HTTPAPIResponse response = await m_HttpAPIHelper.Get(finalURI) as HTTPAPIResponse;
 
             IResponseContext searchResponse = ParseResponse(response);
             return searchResponse;
@@ -81,6 +82,7 @@ namespace ImageSearch.ServiceComponent
                 }
                 responseDataModel.URI = imageURICol;
                 Logger.Log("Successfully parsed flicker response");
+                responseDataModel.Status = "Parsed response successfully";
             }
             catch (Exception exp)
             {

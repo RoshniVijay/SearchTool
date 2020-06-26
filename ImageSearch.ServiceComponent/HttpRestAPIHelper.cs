@@ -4,29 +4,35 @@ using System.Threading.Tasks;
 using ImageSearch.DataModel;
 using ImageSearch.Common;
 using ImageSearch.DataModel.Contracts;
+using ImageSearch.ServiceComponent.Contracts;
 
 namespace ImageSearch.ServiceComponent.Utilities
 {
     /// <summary>
     /// Rest client to make GET API call
     /// </summary>
-    public static class HttpRestAPIHelper
+    internal class HttpRestAPIHelper : IHttpRestAPIHelper
     {
-        private static HttpClient client = new HttpClient();
+        private  HttpClient m_HttpClient;
+
+        public HttpRestAPIHelper()
+        {
+            m_HttpClient = new HttpClient();
+        }
 
         /// <summary>
         /// Rest GET call
         /// </summary>
         /// <param name="uri">fully formatted URL</param>
         /// <returns></returns>
-        public static async Task<IHttpAPIResponse> Get(string uri)
+        public  async Task<IHttpAPIResponse> Get(string uri)
         {
             HTTPAPIResponse httpResp = new HTTPAPIResponse();
             ErrorCodes errorCode = ErrorCodes.NoError;
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(uri);
+                HttpResponseMessage response = await m_HttpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
                     Logger.Log("HTTP call succedded. URL:" + uri);

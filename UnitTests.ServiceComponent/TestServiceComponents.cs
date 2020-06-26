@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ImageSearch.Common;
 using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
 using ImageSearch.ServiceComponent;
 using ImageSearch.ServiceComponent.Contracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NMock;
 
 namespace UnitTests.ServiceComponent
 {
     [TestClass]
     public class TestServiceComponents
-    { 
+    {
         /// <summary>
         /// Tests the create factory  method to check if correct instance aare reurned during repeated calls
         /// </summary>
@@ -46,8 +48,8 @@ namespace UnitTests.ServiceComponent
         /// Tests the create factory  method to check if correct instance aare reurned during repeated calls
         /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException), "Invalid argument passed to method FlickerSearchServiceComponent.PerformSearch")]
-        public void Test_FlickerServiceComponent_Negative()
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task Test_FlickerServiceComponent_Negative()
         {
             AbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
             IServiceComponent serviceComponent = serviceFactory.CreateSingleton(DataSources.Flicker);
@@ -55,8 +57,62 @@ namespace UnitTests.ServiceComponent
             queryContext.ApplicationConfiguration = null;
             queryContext.QueryParam = null;
 
-            serviceComponent.PerformSearch(queryContext);
+            IResponseContext rc = await serviceComponent.PerformSearch(queryContext);
         }
 
+        /// <summary>
+        /// Tests the create factory  method to check if correct instance aare reurned during repeated calls
+        /// </summary>
+        [TestMethod]
+        public async Task Test_FlickerServiceComponent_Positive()
+        {
+            var mockHttpHelper = new MockFactory().CreateMock<IHttpRestAPIHelper>();
+            IQueryContext qc = new QueryContext();
+            qc.QueryParam = "Nature";
+            qc.ApplicationConfiguration = new ApplicationConfiguration();
+            IDataSource data = qc.ApplicationConfiguration.GetDataSource(DataSources.Flicker);
+
+            var mockHttpResponse = new MockFactory().CreateMock<IHttpAPIResponse>();
+            Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
+            mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
+
+            AbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IServiceComponent serviceComponent = new FlickerSearchServiceComponent();
+            IResponseContext rc = await serviceComponent.PerformSearch(qc);
+
+            Assert.IsNotNull(rc);
+            Assert.IsNotNull(rc.Status);
         }
+
+        /// <summary>
+        /// Tests the create factory  method to check if correct instance aare reurned during repeated calls
+        /// </summary>
+        [TestMethod]
+        public async Task Test_NewsAPIServiceComponent_Positive()
+        {
+            var mockHttpHelper = new MockFactory().CreateMock<IHttpRestAPIHelper>();
+            IQueryContext qc = new QueryContext();
+            qc.QueryParam = "Nature";
+            qc.ApplicationConfiguration = new ApplicationConfiguration();
+            IDataSource data = qc.ApplicationConfiguration.GetDataSource(DataSources.NewsAPI);
+
+            var mockHttpResponse = new MockFactory().CreateMock<IHttpAPIResponse>();
+            Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
+            mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
+
+            AbstractServiceComponentFactory serviceFactory = new ServiceComponentFactory();
+            IServiceComponent serviceComponent = new NewsAPISearchServiceComponent();
+            IResponseContext rc = await serviceComponent.PerformSearch(qc);
+
+            Assert.IsNotNull(rc);
+            Assert.IsNotNull(rc.Status);
+        }
+
+        private IHttpAPIResponse MockCallback()
+        {
+            var mockHttpResponse = new MockFactory().CreateMock<IHttpAPIResponse>();
+            Assert.IsNotNull(mockHttpResponse);
+            return mockHttpResponse as IHttpAPIResponse;
+        }
+    }
 }

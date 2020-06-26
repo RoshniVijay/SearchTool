@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseServiceComponent.cs" />
     <Compile Include="NewsAPIServiceComponent.cs" />
     <Compile Include="FlickerSearchServiceComponent.cs" />
     <Compile Include="HttpRestAPIHelper.cs" />
