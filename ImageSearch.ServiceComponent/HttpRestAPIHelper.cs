@@ -11,14 +11,28 @@ namespace ImageSearch.ServiceComponent.Utilities
     /// <summary>
     /// Rest client to make GET API call
     /// </summary>
-    internal class HttpRestAPIHelper : IHttpRestAPIHelper
+    internal class HttpRestAPIHelper : IHttpRestAPIHelper, IDisposable
     {
-        private  HttpClient m_HttpClient;
+        private HttpClient m_HttpClient;
+        private bool m_bDisposed;
 
         public HttpRestAPIHelper()
         {
             m_HttpClient = new HttpClient();
         }
+
+        public void Dispose()
+        {
+            if (m_bDisposed)
+            {
+                return;
+            }
+
+            // Dispose managed state (managed objects).
+            m_HttpClient?.Dispose();
+            m_HttpClient = null;
+        }
+    
 
         /// <summary>
         /// Rest GET call

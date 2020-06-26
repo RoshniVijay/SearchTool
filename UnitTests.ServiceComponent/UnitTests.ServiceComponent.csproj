@@ -56,14 +56,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mocks\MockHttpHelpeInterfacer.cs" />
-    <Compile Include="NMock3\NMockTest.cs" />
     <Compile Include="TestServiceComponents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="NMock3\NMock3 Cheat Sheet.pdf" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">
@@ -86,6 +80,9 @@
       <Project>{f1085286-8c53-4a81-bd59-ec431c3dd41f}</Project>
       <Name>ImageSearch.ServiceComponent</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mocks\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

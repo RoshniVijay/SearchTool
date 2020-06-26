@@ -1,7 +1,5 @@
-﻿using ImageSearch.Common;
-using ImageSearch.DataModel;
+﻿using ImageSearch.DataModel;
 using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent.Contracts;
 using System.Collections.ObjectModel;
 
 namespace ImageSearch.ViewModel
