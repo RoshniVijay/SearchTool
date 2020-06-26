@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.ServiceComponen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.Common", "ImageSearch.Common\ImageSearch.Common.csproj", "{CC530807-23C9-47F8-8D7F-6E76385E4834}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{455942C8-8EC6-45BE-9A2A-B350BC67DD7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.ServiceComponent", "UnitTests.ServiceComponent\UnitTests.ServiceComponent.csproj", "{0ACADF0D-C2E9-4B73-8CC2-ACEFB6D0F413}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,9 +55,16 @@ Global
 		{CC530807-23C9-47F8-8D7F-6E76385E4834}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC530807-23C9-47F8-8D7F-6E76385E4834}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC530807-23C9-47F8-8D7F-6E76385E4834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ACADF0D-C2E9-4B73-8CC2-ACEFB6D0F413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ACADF0D-C2E9-4B73-8CC2-ACEFB6D0F413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ACADF0D-C2E9-4B73-8CC2-ACEFB6D0F413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ACADF0D-C2E9-4B73-8CC2-ACEFB6D0F413}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0ACADF0D-C2E9-4B73-8CC2-ACEFB6D0F413} = {455942C8-8EC6-45BE-9A2A-B350BC67DD7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC62E7A3-2F9E-4EC5-B869-4CE08ADD243D}

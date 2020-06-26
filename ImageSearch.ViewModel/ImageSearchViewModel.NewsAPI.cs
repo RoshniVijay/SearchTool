@@ -56,11 +56,12 @@ namespace ImageSearch.ViewModel
             {
                 m_NewsData = respContext.NewsItems;
                 OnPropertyChange("NewsItemsResponseCollection");
+
+                //Update any status - error etc
+                m_Status = respContext.Status;
+                OnPropertyChange("Status");
             }
 
-            //Update any status - error etc
-            m_Status = respContext.Status;
-            OnPropertyChange("Status");
         }
         #endregion
     }

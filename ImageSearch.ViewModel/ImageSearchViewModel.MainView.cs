@@ -23,6 +23,7 @@ namespace ImageSearch.ViewModel
         #endregion Implement INotifyPropertyChanged Interface
 
         #region Main View Model elements
+
         /// <summary>
         /// Search string entered in UI
         /// </summary>
@@ -62,10 +63,27 @@ namespace ImageSearch.ViewModel
             m_ServiceComponentFactory = new ServiceComponentFactory();
             m_AppConfig = new ApplicationConfiguration();
             m_DataSourceCollection = new ObservableCollection<string>();
-       
+            InitializationMainVewData();
             //Initialize other partial classes that has specific view model/Controls for datasources like Flicker/twitter etc
             InitializeFlickerData();
             InitializeNewsAPIData();
+        }
+
+        /// <summary>
+        /// Initialize main controls common for all view models
+        /// </summary>
+        private void InitializationMainVewData()
+        {
+            foreach (IDataSource dataSource in m_AppConfig.GetAvailableDataSources())
+            {
+                m_DataSourceCollection.Add(dataSource.DataSourceName);
+                if(dataSource.IsSelected)
+                {
+                    m_CurrentSelectedDataSource = dataSource.DataSourceName;
+                }
+            }
+            OnPropertyChange("DataSourceCollection");
+            OnPropertyChange("CurrentDataSourceSelection");
         }
 
         protected void OnPropertyChange(string propertyName)
@@ -76,8 +94,12 @@ namespace ImageSearch.ViewModel
             }
         }
 
-      
+        #region properties
 
+
+        /// <summary>
+        /// Currently selected data source - flicker/newsAPI
+        /// </summary>
         public string CurrentDataSourceSelection
         {
             get { return m_CurrentSelectedDataSource; }
@@ -94,7 +116,9 @@ namespace ImageSearch.ViewModel
         }
 
 
-
+        /// <summary>
+        /// Available Data source collection
+        /// </summary>
         public ObservableCollection<string> DataSourceCollection
         {
             get
@@ -109,7 +133,9 @@ namespace ImageSearch.ViewModel
             }
         }
 
-        
+        /// <summary>
+        /// Status text
+        /// </summary>
         public string Status
         {
             get { return m_Status; }
@@ -123,6 +149,9 @@ namespace ImageSearch.ViewModel
             }
         }
 
+        /// <summary>
+        /// Query string from UI
+        /// </summary>
         public string ImageSearchQuery
         {
             get { return m_imageSearchQuery; }
@@ -136,6 +165,9 @@ namespace ImageSearch.ViewModel
             }
         }
 
+        /// <summary>
+        /// Search trigger for executing action
+        /// </summary>
         public ICommand SearchCommand
         {
             get
@@ -154,6 +186,11 @@ namespace ImageSearch.ViewModel
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Perform search
+        /// </summary>
         private async void Search()
         {
             DateTime curDateTime = DateTime.Now;

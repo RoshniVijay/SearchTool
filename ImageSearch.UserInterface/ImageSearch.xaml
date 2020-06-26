@@ -13,6 +13,7 @@
             <ColumnDefinition Width="801*"/>
         </Grid.ColumnDefinitions>
         <TextBox Height="23" TextWrapping="Wrap"  Text="{Binding ImageSearchQuery}" Margin="30,20,384,730" Grid.ColumnSpan="3"/>
+        <ComboBox Name="m_DataSourceCombo" HorizontalAlignment="Left" Margin="454,20,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}" SelectedItem="{Binding CurrentDataSourceSelection}" SelectionChanged="OnDataSourceSelectionChanged" Grid.Column="2"/>
         <Button Content="S e a r c h" Command="{Binding SearchCommand}" Margin="628,20,44,730" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
         <TabControl HorizontalAlignment="Left" Height="691" Margin="30,60,0,0" VerticalAlignment="Top" Width="1078" RenderTransformOrigin="0.5,0.5" Loaded="OnTabControlLoad" Grid.ColumnSpan="3">
             <TabItem Header="{Binding CurrentDataSourceSelection}">
@@ -59,7 +60,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <ComboBox Name="m_DataSourceCombo" HorizontalAlignment="Left" Margin="454,20,0,0" VerticalAlignment="Top" Width="142" Height="23" ItemsSource="{Binding DataSourceCollection}" SelectedItem="{Binding CurrentDataSourceSelection}" SelectionChanged="OnDataSourceSelectionChanged" Grid.Column="2"/>
         <Label Content="{Binding Status}" HorizontalAlignment="Left" Margin="0,751,0,0" VerticalAlignment="Top" Width="1152" Height="22" Grid.ColumnSpan="3"/>
     </Grid>
 </Window>

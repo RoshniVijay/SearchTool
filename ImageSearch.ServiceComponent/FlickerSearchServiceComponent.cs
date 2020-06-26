@@ -21,6 +21,10 @@ namespace ImageSearch.ServiceComponent
         /// <param name="queryContext"></param>
         public async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
         {
+            if(queryContext == null || queryContext.ApplicationConfiguration == null || queryContext.QueryParam == null)
+            {
+                throw new ArgumentException("Invalid argument passed to method FlickerSearchServiceComponent.PerformSearch");
+            }
             ApplicationConfiguration appConfig = queryContext.ApplicationConfiguration;
             IDataSource ds = appConfig.GetDataSource(DataSources.Flicker);
             //sample query : https://www.flickr.com/services/feeds/photos_public.gne?tags=Nature

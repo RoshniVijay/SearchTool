@@ -43,7 +43,7 @@ namespace ImageSearch.Common
         /// return all available datasources
         /// </summary>
         /// <returns></returns>
-        public ICollection<IDataSource> AvailableDataSources()
+        public ICollection<IDataSource> GetAvailableDataSources()
         {
             return m_AvailableDataSources.Values;
         }
