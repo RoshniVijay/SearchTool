@@ -1,0 +1,19 @@
+﻿{
+"status":"ok",
+"totalResults":49205,
+"articles":
+[{
+"source":
+{
+"id":null,
+"name":"Scientific American"
+},
+"author":"Oswald Schmitz",
+"title":"Rethinking Humanity's Ties to Nature",
+"description":"The lesson from the pandemic is not to retreat from the natural world, but to become better stewards\n\n-- Read more on ScientificAmerican.com",
+"url":"https://blogs.scientificamerican.com/observations/rethinking-humanitys-ties-to-nature/",
+"urlToImage":"https://static.scientificamerican.com/blogs/cache/file/4B06A266-B870-45CA-AE1E00CE286C6F84.jpg",
+"publishedAt":"2020-06-04T11:00:00Z",
+"content":"Four-year-old Nadia began to show some worrisome signs. She had an unusually poor appetite accompanied by a dry cough. Sure enough, testing revealed that she was infected with COsVID-19. Nadia now se… [+6941 chars]"
+}]
+}

@@ -1,4 +1,4 @@
-﻿namespace ImageSearch.DataModel.Contracts
+﻿namespace SearchTool.DataModel.Contracts
 {
     /// <summary>
     /// error codes

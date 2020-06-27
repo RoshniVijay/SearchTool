@@ -1,27 +1,45 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using ImageSearch.Common;
-using ImageSearch.DataModel;
-using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent.Contracts;
+using SearchTool.Common;
+using SearchTool.DataModel;
 using Newtonsoft.Json;
+using SearchTool.SearchComponent.Contracts;
 
-namespace ImageSearch.ServiceComponent
+namespace SearchTool.SearchComponent
 {
     /// <summary>
     /// Component to make specific query to NewsAPI server
     /// </summary>
-    public class NewsAPISearchServiceComponent : BaseServiceComponent, IServiceComponent
+    public class NewsAPISearchhComponent : AbstractSearchComponent
     {
+        /// <summary>
+        /// this constructor is to inject HTTPHelper to enable unit testing
+        /// </summary>
+        /// <param name="m_HttpAPIHelper"></param>
+        public NewsAPISearchhComponent()
+        {
+        }
+
+        /// <summary>
+        /// this constructor is to inject HTTPHelper to enable unit testing
+        /// </summary>
+        /// <param name="m_HttpAPIHelper"></param>
+        public NewsAPISearchhComponent(ICommunicationHelper httpAPIHelper)
+        {
+            m_HttpAPIHelper = httpAPIHelper;
+        }
+
         /// <summary>
         /// API to perform NewsAPI search
         /// </summary>
         /// <param name="queryContext"></param>
-        public async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
+        public override async Task<IResponseContext> PerformSearch(IQueryContext queryContext)
         {
             ApplicationConfiguration appConfig = queryContext.ApplicationConfiguration;
             IDataSource ds = appConfig.GetDataSource(DataSources.NewsAPI);
+            if (string.IsNullOrEmpty(queryContext.QueryParam))
+                queryContext.QueryParam = "Trending";
             //sample query : "http://newsapi.org/v2/everything?" + "q=Nature&apiKey=a56eae9e984a40b2a88c2eb097427e4b";
             string finalURI = ds.DataSourceURI + "?q=" + queryContext.QueryParam + "&apiKey=a56eae9e984a40b2a88c2eb097427e4b";
             HTTPAPIResponse response = await m_HttpAPIHelper.Get(finalURI) as HTTPAPIResponse;
@@ -55,7 +73,7 @@ namespace ImageSearch.ServiceComponent
             }
             catch (Exception exp)
             {
-                Logger.Log("Exception while parsing response from NewsAPI. Details:" + exp.ToString());
+                Logger.Log("Exception while parsing response from NewsAPI. Details:" + exp);
                 responseDataModel.NewsItems = new ObservableCollection<Articles>();
                 responseDataModel.Status = "Error in parsing response from server";
 

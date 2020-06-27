@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace ImageSearch.Common
+namespace SearchTool.Common
 {
     /// <summary>
     /// Static logger class to log events to file.
@@ -10,7 +10,7 @@ namespace ImageSearch.Common
     public static class Logger
     {
         private static readonly object LockObject = new object();
-        private static readonly string LogFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "Log.txt";
+        private static readonly string LogFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Log.txt";
 
         /// <summary>
         /// Logs the passed string to the file.

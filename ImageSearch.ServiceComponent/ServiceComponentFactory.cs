@@ -1,50 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ImageSearch.Common;
-using ImageSearch.ServiceComponent.Contracts;
+using SearchTool.Common;
+using SearchTool.SearchComponent.Contracts;
 
-namespace ImageSearch.ServiceComponent
+namespace SearchTool.SearchComponent
 {
     /// <summary>
     /// Factory to create service component.
     /// </summary>
-    public class ServiceComponentFactory : IServiceComponentFactory
+    public class SearchComponentFactory : ISearchComponentFactory
     {
         /// <summary>
         /// creates object first time and caches it
         /// </summary>
-        private readonly Dictionary<DataSources, IServiceComponent> myServiceComponentPool = new Dictionary<DataSources, IServiceComponent>();
+        private readonly Dictionary<DataSources, ISearchComponent> mySearchComponentPool = new Dictionary<DataSources, ISearchComponent>();
 
         /// <summary>
-        /// Create the servicecomponent instance based on datasource passed. If already instantiates, it will be returned.
+        /// Create the SearchComponent instance based on datasource passed. If already instantiates, it will be returned.
         /// Not thread safe. 
         /// </summary>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public IServiceComponent CreateServiceComponent(DataSources dataSource)
+        public ISearchComponent CreateSearchComponent(DataSources dataSource)
         {
-            if (myServiceComponentPool.Keys.Contains(dataSource))
+            if (mySearchComponentPool.Keys.Contains(dataSource))
             {
-                return myServiceComponentPool[dataSource];
+                return mySearchComponentPool[dataSource];
             }
-            IServiceComponent serviceComponent;
+            ISearchComponent SearchComponent;
             //else go ahead and add
             switch (dataSource)
             {
                 case DataSources.Flicker:
-                    serviceComponent = new FlickerSearchServiceComponent();
+                    SearchComponent = new FlickerSearchSearchComponent();
                     break;
 
                 case DataSources.NewsAPI:
-                    serviceComponent = new NewsAPISearchServiceComponent();
+                    SearchComponent = new NewsAPISearchhComponent();
                     break;
 
                 default:
                     throw new NotImplementedException("Option is not implemented" + dataSource.ToString());
             }
-            myServiceComponentPool.Add(dataSource, serviceComponent);//Add to the pool to avoid creation next time
-            return serviceComponent;
+            mySearchComponentPool.Add(dataSource, SearchComponent);//Add to the pool to avoid creation next time
+            return SearchComponent;
         }
     }
 }

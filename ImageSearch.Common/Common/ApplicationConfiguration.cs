@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ImageSearch.Common
+namespace SearchTool.Common
 {
     /// <summary>
     /// Application Configuration to store current state of application. 

@@ -1,4 +1,4 @@
-﻿namespace ImageSearch.DataModel
+﻿namespace SearchTool.DataModel
 {
     /// <summary>
     /// Currently the URL

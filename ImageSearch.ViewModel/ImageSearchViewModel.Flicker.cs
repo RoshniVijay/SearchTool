@@ -1,9 +1,9 @@
-﻿using ImageSearch.Common;
-using ImageSearch.DataModel;
-using ImageSearch.DataModel.Contracts;
+﻿using SearchTool.Common;
+using SearchTool.DataModel;
+using SearchTool.DataModel.Contracts;
 using System.Collections.ObjectModel;
 
-namespace ImageSearch.ViewModel
+namespace SearchTool.ViewModel
 {
     /// <summary>
     /// Partial class for Flicker view model

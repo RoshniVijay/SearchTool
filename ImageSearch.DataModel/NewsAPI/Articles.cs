@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ImageSearch.DataModel
+namespace SearchTool.DataModel
 {
     /// <summary>
     /// Article is the json representation of newsapi response. Used by Newtonsoft.json dll

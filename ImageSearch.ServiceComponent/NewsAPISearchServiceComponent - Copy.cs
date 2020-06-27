@@ -1,17 +1,35 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using ImageSearch.Common;
-using ImageSearch.DataModel;
+using SearchTool.Common;
+using SearchTool.DataModel;
 using Newtonsoft.Json;
+using SearchTool.SearchComponent.Contracts;
 
-namespace ImageSearch.ServiceComponent
+namespace SearchTool.SearchComponent
 {
     /// <summary>
     /// Component to make specific query to NewsAPI server
     /// </summary>
-    public class NewsAPISearchServiceComponent : AbstractServiceComponent
+    public class NewsAPISearchhComponent : AbstractSearchComponent
     {
+        /// <summary>
+        /// this constructor is to inject HTTPHelper to enable unit testing
+        /// </summary>
+        /// <param name="m_HttpAPIHelper"></param>
+        public NewsAPISearchhComponent()
+        {
+        }
+
+        /// <summary>
+        /// this constructor is to inject HTTPHelper to enable unit testing
+        /// </summary>
+        /// <param name="m_HttpAPIHelper"></param>
+        public NewsAPISearchhComponent(ICommunicationHelper httpAPIHelper)
+        {
+            m_HttpAPIHelper = httpAPIHelper;
+        }
+
         /// <summary>
         /// API to perform NewsAPI search
         /// </summary>

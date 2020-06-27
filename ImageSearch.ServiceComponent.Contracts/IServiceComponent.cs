@@ -1,9 +1,9 @@
-﻿using ImageSearch.Common;
+﻿using SearchTool.Common;
 using System.Threading.Tasks;
 
-namespace ImageSearch.ServiceComponent.Contracts
+namespace SearchTool.SearchComponent.Contracts
 {
-    public interface IServiceComponent
+    public interface ISearchComponent
     {
         Task<IResponseContext> PerformSearch(IQueryContext queryContext);
     }

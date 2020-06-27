@@ -2,17 +2,34 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Xml;
-using ImageSearch.Common;
-using ImageSearch.DataModel;
-using ImageSearch.ServiceComponent.Contracts;
+using SearchTool.Common;
+using SearchTool.DataModel;
+using SearchTool.SearchComponent.Contracts;
 
-namespace ImageSearch.ServiceComponent
+namespace SearchTool.SearchComponent
 {
     /// <summary>
     /// Component to make specific query to Flicker server
     /// </summary>
-    public class FlickerSearchServiceComponent : AbstractServiceComponent
+    public class FlickerSearchSearchComponent : AbstractSearchComponent
     {
+        /// <summary>
+        /// this constructor is to inject HTTPHelper to enable unit testing
+        /// </summary>
+        /// <param name="m_HttpAPIHelper"></param>
+        public FlickerSearchSearchComponent()
+        {
+        }
+
+        /// <summary>
+        /// this constructor is to inject HTTPHelper to enable unit testing
+        /// </summary>
+        /// <param name="m_HttpAPIHelper"></param>
+        public FlickerSearchSearchComponent(ICommunicationHelper httpAPIHelper)
+        {
+            m_HttpAPIHelper = httpAPIHelper;
+        }
+
         /// <summary>
         /// API to perform flicker search
         /// </summary>
@@ -21,7 +38,7 @@ namespace ImageSearch.ServiceComponent
         {
             if(queryContext?.ApplicationConfiguration == null || queryContext.QueryParam == null)
             {
-                throw new ArgumentException("Invalid argument passed to method FlickerSearchServiceComponent.PerformSearch", nameof(queryContext));
+                throw new ArgumentException("Invalid argument passed to method FlickerSearchSearchComponent.PerformSearch", nameof(queryContext));
             }
             ApplicationConfiguration appConfig = queryContext.ApplicationConfiguration;
             IDataSource ds = appConfig.GetDataSource(DataSources.Flicker);

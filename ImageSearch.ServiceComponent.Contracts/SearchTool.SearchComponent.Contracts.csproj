@@ -47,9 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">
+    <ProjectReference Include="..\ImageSearch.Common\SearchTool.Common.csproj">
       <Project>{cc530807-23c9-47f8-8d7f-6e76385e4834}</Project>
-      <Name>ImageSearch.Common</Name>
+      <Name>SearchTool.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

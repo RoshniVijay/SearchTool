@@ -1,13 +1,13 @@
 ﻿
-using ImageSearch.Common;
+using SearchTool.Common;
 
-namespace ImageSearch.ServiceComponent.Contracts
+namespace SearchTool.SearchComponent.Contracts
 {
     /// <summary>
     /// Abstract factory
     /// </summary>
-    public interface IServiceComponentFactory
+    public interface ISearchComponentFactory
     {
-        IServiceComponent CreateServiceComponent(DataSources dataSource);
+        ISearchComponent CreateSearchComponent(DataSources dataSource);
     }
 }

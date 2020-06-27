@@ -1,4 +1,4 @@
-﻿namespace ImageSearch.Common
+﻿namespace SearchTool.Common
 {
     /// <summary>
     /// Data source details specific to flicker

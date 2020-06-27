@@ -1,12 +1,12 @@
-﻿using ImageSearch.Common;
+﻿using SearchTool.Common;
 using System.Threading.Tasks;
 
-namespace ImageSearch.ServiceComponent.Contracts
+namespace SearchTool.SearchComponent.Contracts
 { 
     /// <summary>
     /// IHttpRestApi header
     /// </summary>
-    public interface IHttpRestAPIHelper
+    public interface ICommunicationHelper
     {
         Task<IHttpAPIResponse> Get(string uri);
     }

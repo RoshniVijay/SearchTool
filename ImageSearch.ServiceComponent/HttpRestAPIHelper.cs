@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ImageSearch.Common;
-using ImageSearch.ServiceComponent.Contracts;
+using SearchTool.Common;
+using SearchTool.SearchComponent.Contracts;
 
-namespace ImageSearch.ServiceComponent.Utilities
+namespace SearchTool.SearchComponent.Utilities
 {
     /// <summary>
     /// Rest client to make GET API call
     /// </summary>
-    internal class HttpRestAPIHelper : IHttpRestAPIHelper
+    internal class HttpRestAPIHelper : ICommunicationHelper
     {
         private readonly HttpClient m_HttpClient;
 

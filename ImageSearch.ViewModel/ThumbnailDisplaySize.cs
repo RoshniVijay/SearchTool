@@ -1,4 +1,4 @@
-﻿namespace ImageSearch.ViewModel
+﻿namespace SearchTool.ViewModel
 {
     /// <summary>
     /// Constant strings and enums

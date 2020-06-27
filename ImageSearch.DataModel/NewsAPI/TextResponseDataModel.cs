@@ -1,7 +1,7 @@
-﻿using ImageSearch.Common;
+﻿using SearchTool.Common;
 using System.Collections.ObjectModel;
 
-namespace ImageSearch.DataModel
+namespace SearchTool.DataModel
 {
     /// <summary>
     /// Response for NewsAPI caller

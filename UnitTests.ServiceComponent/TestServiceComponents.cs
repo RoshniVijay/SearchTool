@@ -1,47 +1,47 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ImageSearch.Common;
-using ImageSearch.DataModel;
-using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent;
-using ImageSearch.ServiceComponent.Contracts;
+using SearchTool.Common;
+using SearchTool.SearchComponent;
+using SearchTool.SearchComponent.Contracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NMock;
+using System.IO;
+using System.Reflection;
+using SearchTool.DataModel;
 
-namespace UnitTests.ServiceComponent
+namespace UnitTests.SearchComponent
 {
     [TestClass]
-    public class TestServiceComponents
+    public class TestSearchComponents
     {
         /// <summary>
         /// Tests the create factory  method to check if correct instance are returned during repeated calls
         /// </summary>
         [TestMethod]
-        public void Test_CreateServiceComponent_Positive()
+        public void Test_CreateSearchComponent_Positive()
         {
-            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
-            IServiceComponent serviceComponent = serviceFactory.CreateServiceComponent(DataSources.Flicker);
-            Assert.IsTrue(serviceComponent is FlickerSearchServiceComponent);
+            ISearchComponentFactory serviceFactory = new SearchComponentFactory();
+            ISearchComponent SearchComponent = serviceFactory.CreateSearchComponent(DataSources.Flicker);
+            Assert.IsTrue(SearchComponent is FlickerSearchSearchComponent);
 
-            IServiceComponent serviceComponent2 = serviceFactory.CreateServiceComponent(DataSources.Flicker);
-            Assert.IsTrue(serviceComponent2 is FlickerSearchServiceComponent);
-            Assert.AreSame(serviceComponent, serviceComponent2);
+            ISearchComponent SearchComponent2 = serviceFactory.CreateSearchComponent(DataSources.Flicker);
+            Assert.IsTrue(SearchComponent2 is FlickerSearchSearchComponent);
+            Assert.AreSame(SearchComponent, SearchComponent2);
 
-            IServiceComponent serviceComponent3 = serviceFactory.CreateServiceComponent(DataSources.Flicker);
-            Assert.IsTrue(serviceComponent3 is FlickerSearchServiceComponent);
-            Assert.AreSame(serviceComponent, serviceComponent3);
+            ISearchComponent SearchComponent3 = serviceFactory.CreateSearchComponent(DataSources.Flicker);
+            Assert.IsTrue(SearchComponent3 is FlickerSearchSearchComponent);
+            Assert.AreSame(SearchComponent, SearchComponent3);
 
-            IServiceComponent serviceComponent4 = serviceFactory.CreateServiceComponent(DataSources.NewsAPI);
-            Assert.IsTrue(serviceComponent4 is NewsAPISearchServiceComponent);
+            ISearchComponent SearchComponent4 = serviceFactory.CreateSearchComponent(DataSources.NewsAPI);
+            Assert.IsTrue(SearchComponent4 is NewsAPISearchhComponent);
 
-            IServiceComponent serviceComponent5 = serviceFactory.CreateServiceComponent(DataSources.NewsAPI);
-            Assert.IsTrue(serviceComponent5 is NewsAPISearchServiceComponent);
-            Assert.AreSame(serviceComponent5, serviceComponent4);
+            ISearchComponent SearchComponent5 = serviceFactory.CreateSearchComponent(DataSources.NewsAPI);
+            Assert.IsTrue(SearchComponent5 is NewsAPISearchhComponent);
+            Assert.AreSame(SearchComponent5, SearchComponent4);
 
-            IServiceComponentFactory serviceFactory6 = new ServiceComponentFactory();
-            IServiceComponent serviceComponent6 = serviceFactory.CreateServiceComponent(DataSources.Flicker);
-            Assert.IsTrue(serviceComponent6 is FlickerSearchServiceComponent);
-            Assert.AreSame(serviceComponent, serviceComponent6);
+            ISearchComponentFactory serviceFactory6 = new SearchComponentFactory();
+            ISearchComponent SearchComponent6 = serviceFactory.CreateSearchComponent(DataSources.Flicker);
+            Assert.IsTrue(SearchComponent6 is FlickerSearchSearchComponent);
+            Assert.AreSame(SearchComponent, SearchComponent6);
         }
 
         /// <summary>
@@ -49,38 +49,34 @@ namespace UnitTests.ServiceComponent
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public async Task Test_FlickerServiceComponent_Negative()
+        public async Task Test_FlickerSearchComponent_Exception_Negative()
         {
-            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
-            IServiceComponent serviceComponent = serviceFactory.CreateServiceComponent(DataSources.Flicker);
+            ISearchComponentFactory serviceFactory = new SearchComponentFactory();
+            ISearchComponent SearchComponent = serviceFactory.CreateSearchComponent(DataSources.Flicker);
             IQueryContext queryContext = new QueryContext();
             queryContext.ApplicationConfiguration = null;
             queryContext.QueryParam = null;
 
-            IResponseContext rc = await serviceComponent.PerformSearch(queryContext);
+            IResponseContext rc = await SearchComponent.PerformSearch(queryContext);
         }
 
         /// <summary>
         /// Tests the create factory  method to check if correct instance are returned during repeated calls
         /// </summary>
         [TestMethod]
-        public async Task Test_FlickerServiceComponent_Positive()
+        public async Task Test_FlickerSearchComponent_Positive()
         {
-            var mockHttpHelper = new MockFactory().CreateMock<IHttpRestAPIHelper>();
             IQueryContext qc = new QueryContext();
             qc.QueryParam = "Nature";
             qc.ApplicationConfiguration = new ApplicationConfiguration();
             IDataSource data = qc.ApplicationConfiguration.GetDataSource(DataSources.Flicker);
 
-            var mockHttpResponse = new MockFactory().CreateMock<IHttpAPIResponse>();
-            Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
-            mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
+            ISearchComponent SearchComponent = new FlickerSearchSearchComponent(new MockHTTPAPIHelper("Test_FlickerSearchComponent_Positive"));
+            IResponseContext rc = await SearchComponent.PerformSearch(qc);
+            ImageResponseDataModel responseModel = rc as ImageResponseDataModel;
+            Assert.IsNotNull(responseModel);
 
-            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
-            IServiceComponent serviceComponent = new FlickerSearchServiceComponent();
-            IResponseContext rc = await serviceComponent.PerformSearch(qc);
-
-            Assert.IsNotNull(rc);
+            Assert.AreEqual(responseModel.URI.Count, 1);
             Assert.IsNotNull(rc.Status);
         }
 
@@ -88,31 +84,104 @@ namespace UnitTests.ServiceComponent
         /// Tests the create factory  method to check if correct instance are returned during repeated calls
         /// </summary>
         [TestMethod]
-        public async Task Test_NewsAPIServiceComponent_Positive()
+        public async Task Test_FlickerSearchComponent_Negative()
         {
-            var mockHttpHelper = new MockFactory().CreateMock<IHttpRestAPIHelper>();
+            IQueryContext qc = new QueryContext();
+            qc.QueryParam = "Nature";
+            qc.ApplicationConfiguration = new ApplicationConfiguration();
+            IDataSource data = qc.ApplicationConfiguration.GetDataSource(DataSources.Flicker);
+
+            ISearchComponent SearchComponent = new FlickerSearchSearchComponent(new MockHTTPAPIHelper("Test_FlickerSearchComponent_Negative"));
+            IResponseContext rc = await SearchComponent.PerformSearch(qc);
+            ImageResponseDataModel responseModel = rc as ImageResponseDataModel;
+            Assert.IsNotNull(responseModel);
+
+            Assert.AreEqual(responseModel.URI.Count, 0);
+            Assert.IsNotNull(rc.Status);
+        }
+
+        /// <summary>
+        /// Tests the create factory  method to check if correct instance are returned during repeated calls
+        /// </summary>
+        [TestMethod]
+        public async Task Test_NewsAPISearchComponent_Positive()
+        {
             IQueryContext qc = new QueryContext();
             qc.QueryParam = "Nature";
             qc.ApplicationConfiguration = new ApplicationConfiguration();
             IDataSource data = qc.ApplicationConfiguration.GetDataSource(DataSources.NewsAPI);
 
-            var mockHttpResponse = new MockFactory().CreateMock<IHttpAPIResponse>();
-            Task<IHttpAPIResponse> mockHttpResponseTask = new Task<IHttpAPIResponse>(MockCallback);
-            mockHttpHelper.Expects.One.Method(s => s.Get(data.DataSourceURI)).WillReturn(mockHttpResponseTask);
+            ISearchComponent SearchComponent = new NewsAPISearchhComponent(new MockHTTPAPIHelper("Test_NewsAPISearchComponent_Positive"));
+            IResponseContext rc = await SearchComponent.PerformSearch(qc);
+            TextResponseDataModel responseModel = rc as TextResponseDataModel;
+            Assert.IsNotNull(responseModel);
 
-            IServiceComponentFactory serviceFactory = new ServiceComponentFactory();
-            IServiceComponent serviceComponent = new NewsAPISearchServiceComponent();
-            IResponseContext rc = await serviceComponent.PerformSearch(qc);
-
-            Assert.IsNotNull(rc);
+            Assert.AreEqual(responseModel.NewsItems.Count, 1);
             Assert.IsNotNull(rc.Status);
         }
 
-        private IHttpAPIResponse MockCallback()
+        /// <summary>
+        /// Tests the create factory  method to check if correct instance are returned during repeated calls
+        /// </summary>
+        [TestMethod]
+        public async Task Test_NewsAPISearchComponent_Negative()
         {
-            var mockHttpResponse = new MockFactory().CreateMock<IHttpAPIResponse>();
-            Assert.IsNotNull(mockHttpResponse);
-            return mockHttpResponse as IHttpAPIResponse;
+            IQueryContext qc = new QueryContext();
+            qc.QueryParam = "Nature";
+            qc.ApplicationConfiguration = new ApplicationConfiguration();
+            IDataSource data = qc.ApplicationConfiguration.GetDataSource(DataSources.NewsAPI);
+
+            ISearchComponent SearchComponent = new NewsAPISearchhComponent(new MockHTTPAPIHelper("Test_FlickerSearchComponent_Negative"));
+            IResponseContext rc = await SearchComponent.PerformSearch(qc);
+            TextResponseDataModel responseModel = rc as TextResponseDataModel;
+            Assert.IsNotNull(responseModel);
+
+            Assert.AreEqual(responseModel.NewsItems.Count, 0);
+            Assert.IsNotNull(rc.Status);
         }
+
+        #region Mock Classes
+
+        private class MockHTTPAPIHelper: ICommunicationHelper
+        {
+            private static readonly string SampleFilePath_Flicker = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\FlickerSampleResponse.txt";
+            private static readonly string SampleFilePath_NewsAPI = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\NewsAPISampleResponse.txt";
+            private string m_currentTestCaseName;
+
+            public MockHTTPAPIHelper(string testCaseName)
+            {
+                m_currentTestCaseName = testCaseName;
+            }
+            public async Task<IHttpAPIResponse> Get(string url)
+            {
+                IHttpAPIResponse sampleResponse = new HTTPAPIResponse();
+                switch (m_currentTestCaseName)
+                {
+                    case "Test_FlickerSearchComponent_Positive":
+                        sampleResponse.Code = ErrorCodes.NoError;
+                        sampleResponse.ResponseString = File.ReadAllText(SampleFilePath_Flicker);
+                        break;
+                    case "Test_FlickerSearchComponent_Negative":
+                    case "Test_NewsAPISearchComponent_Negative":
+                        sampleResponse.Code = ErrorCodes.APIErrorResponse;
+                        sampleResponse.ResponseString = "DummyResponse";
+                        break;
+                    case "Test_NewsAPISearchComponent_Positive":
+                        sampleResponse.Code = ErrorCodes.NoError;
+                        sampleResponse.ResponseString = File.ReadAllText(SampleFilePath_NewsAPI);
+                        break;
+                    case "MoveNext"://called by runtime to updte async-await statemachine!
+                        break;
+                    default:
+                        Assert.Fail();
+                        break;
+                }
+                
+                return sampleResponse;
+            }
+        }
+
+      
+        #endregion Mock Classes
     }
 }

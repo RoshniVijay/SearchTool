@@ -1,4 +1,4 @@
-﻿namespace ImageSearch.DataModel
+﻿namespace SearchTool.DataModel
 {
     /// <summary>
     /// Tab item header to dynamically update bsed on selection

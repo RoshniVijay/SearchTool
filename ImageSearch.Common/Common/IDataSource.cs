@@ -1,5 +1,5 @@
 ﻿
-namespace ImageSearch.Common
+namespace SearchTool.Common
 {
     /// <summary>
     /// Interface for all the datasources supported - flicker/newsAPI etc

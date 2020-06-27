@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:flickr="urn:flickr:user"
+      xmlns:media="http://search.yahoo.com/mrss/">
+
+  <title>Recent Uploads tagged nature</title>
+  <link rel="self" href="http://www.flickr.com/services/feeds/photos_public.gne?tags=Nature" />
+  <link rel="alternate" type="text/html" href="https://www.flickr.com/photos/tags/nature/"/>
+  <id>tag:flickr.com,2005:/photos/public/tagged/all/nature</id>
+  <icon>https://combo.staticflickr.com/pw/images/buddyicon.gif</icon>
+  <subtitle></subtitle>
+  <updated>2020-06-27T18:45:05Z</updated>
+  <generator uri="https://www.flickr.com/">Flickr</generator>
+
+<entry>
+    <title>Orchid</title>
+    <link rel="alternate" type="text/html" href="https://www.flickr.com/photos/40868203@N02/50051365006/"/>
+    <id>tag:flickr.com,2005:/photo/50051365006</id>
+    <published>2020-06-27T18:45:05Z</published>
+    <updated>2020-06-27T18:45:05Z</updated>
+    <flickr:date_taken>2020-06-19T11:43:04-08:00</flickr:date_taken>
+    <dc:date.Taken>2020-06-19T11:43:04-08:00</dc:date.Taken>
+    <content type="html">			&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/people/40868203@N02/&quot;&gt;StickyToffeeQueen&lt;/a&gt; posted a photo:&lt;/p&gt;
+	
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/40868203@N02/50051365006/&quot; title=&quot;Orchid&quot;&gt;&lt;img src=&quot;https://live.staticflickr.com/65535/50051365006_87b815044e_m.jpg&quot; width=&quot;160&quot; height=&quot;240&quot; alt=&quot;Orchid&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</content>
+    <author>
+      <name>StickyToffeeQueen</name>
+      <uri>https://www.flickr.com/people/40868203@N02/</uri>
+      <flickr:nsid>40868203@N02</flickr:nsid>
+      <flickr:buddyicon>https://farm9.staticflickr.com/8402/buddyicons/40868203@N02.jpg?1367356639#40868203@N02</flickr:buddyicon>
+    </author>
+    <link rel="enclosure" type="image/jpeg" href="https://live.staticflickr.com/65535/50051365006_87b815044e_b.jpg" />
+    <category term="orchid" scheme="https://www.flickr.com/photos/tags/" />
+    <category term="flower" scheme="https://www.flickr.com/photos/tags/" />
+    <category term="pink" scheme="https://www.flickr.com/photos/tags/" />
+    <category term="nature" scheme="https://www.flickr.com/photos/tags/" />
+    <displaycategories>
+            </displaycategories>
+    </entry>
+</feed>

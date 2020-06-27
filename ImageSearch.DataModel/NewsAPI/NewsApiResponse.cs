@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ImageSearch.DataModel
+namespace SearchTool.DataModel
 {
     /// <summary>
     /// Response after parsing news API

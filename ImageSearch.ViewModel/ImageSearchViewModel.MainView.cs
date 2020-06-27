@@ -2,13 +2,13 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using ImageSearch.Common;
-using ImageSearch.DataModel;
-using ImageSearch.DataModel.Contracts;
-using ImageSearch.ServiceComponent;
-using ImageSearch.ServiceComponent.Contracts;
+using SearchTool.Common;
+using SearchTool.DataModel;
+using SearchTool.DataModel.Contracts;
+using SearchTool.SearchComponent;
+using SearchTool.SearchComponent.Contracts;
 
-namespace ImageSearch.ViewModel
+namespace SearchTool.ViewModel
 {
     /// <summary>
     /// Main View Model class. It acts as the view model for the common controls like search string, search button etc
@@ -44,7 +44,7 @@ namespace ImageSearch.ViewModel
         /// <summary>
         /// AbstractFactory for biz logic component
         /// </summary>
-        private readonly IServiceComponentFactory m_ServiceComponentFactory;
+        private readonly ISearchComponentFactory m_SearchComponentFactory;
         /// <summary>
         /// Search command triggered by search in UI
         /// </summary>
@@ -61,7 +61,7 @@ namespace ImageSearch.ViewModel
         /// </summary>
         public ImageSearchViewModel()
         {
-            m_ServiceComponentFactory = new ServiceComponentFactory();
+            m_SearchComponentFactory = new SearchComponentFactory();
             m_AppConfig = new ApplicationConfiguration();
             m_DataSourceCollection = new ObservableCollection<string>();
             InitializationMainVewData();
@@ -182,12 +182,12 @@ namespace ImageSearch.ViewModel
         private async void Search()
         {
             DateTime curDateTime = DateTime.Now;
-            IServiceComponent serviceComponent = m_ServiceComponentFactory.CreateServiceComponent(m_AppConfig.CurrentDataSourceSelection);
+            ISearchComponent SearchComponent = m_SearchComponentFactory.CreateSearchComponent(m_AppConfig.CurrentDataSourceSelection);
             IQueryContext queryContext = new QueryContext();
             queryContext.ApplicationConfiguration = m_AppConfig;
             queryContext.QueryParam = ImageSearchQuery;
             Status = "Performing Search...";
-            IResponseContext respContext = await serviceComponent.PerformSearch(queryContext);
+            IResponseContext respContext = await SearchComponent.PerformSearch(queryContext);
             PopulateFlickerDataFields(respContext);
             PopulateNewsAPIDataFields(respContext);
             TimeSpan performance = DateTime.Now - curDateTime;

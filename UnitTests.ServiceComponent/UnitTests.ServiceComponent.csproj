@@ -63,24 +63,27 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">
+    <ProjectReference Include="..\ImageSearch.Common\SearchTool.Common.csproj">
       <Project>{cc530807-23c9-47f8-8d7f-6e76385e4834}</Project>
-      <Name>ImageSearch.Common</Name>
+      <Name>SearchTool.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageSearch.DataModel\ImageSearch.DataModel.csproj">
+    <ProjectReference Include="..\ImageSearch.DataModel\SearchTool.DataModel.csproj">
       <Project>{bf0b07f0-1cf9-4318-b339-469251b18704}</Project>
-      <Name>ImageSearch.DataModel</Name>
+      <Name>SearchTool.DataModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageSearch.ServiceComponent.Contracts\ImageSearch.ServiceComponent.Contracts.csproj">
+    <ProjectReference Include="..\ImageSearch.ServiceComponent.Contracts\SearchTool.SearchComponent.Contracts.csproj">
       <Project>{01644a6c-242d-41a7-b207-0b7bf664af83}</Project>
-      <Name>ImageSearch.ServiceComponent.Contracts</Name>
+      <Name>SearchTool.SearchComponent.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageSearch.ServiceComponent\ImageSearch.ServiceComponent.csproj">
+    <ProjectReference Include="..\ImageSearch.ServiceComponent\SearchTool.SearchComponent.csproj">
       <Project>{f1085286-8c53-4a81-bd59-ec431c3dd41f}</Project>
-      <Name>ImageSearch.ServiceComponent</Name>
+      <Name>SearchTool.SearchComponent</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="NewsAPISampleResponse.txt" />
+    <Content Include="FlickerSampleResponse.txt" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -92,4 +95,8 @@
     <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(ProjectDir)FlickerSampleResponse.txt" "$(OutDir)\..\.." /Y
+xcopy "$(ProjectDir)NewsAPISampleResponse.txt" "$(OutDir)\..\.." /Y</PreBuildEvent>
+  </PropertyGroup>
 </Project>

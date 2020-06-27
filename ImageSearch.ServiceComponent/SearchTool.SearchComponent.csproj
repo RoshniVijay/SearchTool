@@ -44,25 +44,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseServiceComponent.cs" />
-    <Compile Include="NewsAPISearchServiceComponent.cs" />
+    <Compile Include="AbstractServiceComponent.cs" />
     <Compile Include="FlickerSearchServiceComponent.cs" />
     <Compile Include="HttpRestAPIHelper.cs" />
+    <Compile Include="NewsAPIServiceComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceComponentFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageSearch.Common\ImageSearch.Common.csproj">
+    <ProjectReference Include="..\ImageSearch.Common\SearchTool.Common.csproj">
       <Project>{cc530807-23c9-47f8-8d7f-6e76385e4834}</Project>
-      <Name>ImageSearch.Common</Name>
+      <Name>SearchTool.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageSearch.DataModel\ImageSearch.DataModel.csproj">
+    <ProjectReference Include="..\ImageSearch.DataModel\SearchTool.DataModel.csproj">
       <Project>{bf0b07f0-1cf9-4318-b339-469251b18704}</Project>
-      <Name>ImageSearch.DataModel</Name>
+      <Name>SearchTool.DataModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageSearch.ServiceComponent.Contracts\ImageSearch.ServiceComponent.Contracts.csproj">
+    <ProjectReference Include="..\ImageSearch.ServiceComponent.Contracts\SearchTool.SearchComponent.Contracts.csproj">
       <Project>{01644a6c-242d-41a7-b207-0b7bf664af83}</Project>
-      <Name>ImageSearch.ServiceComponent.Contracts</Name>
+      <Name>SearchTool.SearchComponent.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

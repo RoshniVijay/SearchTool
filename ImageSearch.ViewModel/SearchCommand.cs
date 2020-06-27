@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ImageSearch.ViewModel
+namespace SearchTool.ViewModel
 {
     /// <summary>
     /// Search Command triggered from UI

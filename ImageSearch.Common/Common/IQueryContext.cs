@@ -1,6 +1,6 @@
-﻿using ImageSearch.Common;
+﻿using SearchTool.Common;
 
-namespace ImageSearch.Common
+namespace SearchTool.Common
 {
     /// <summary>
     /// Query context with search string etc passed to the rest client

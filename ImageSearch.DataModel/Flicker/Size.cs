@@ -1,4 +1,4 @@
-﻿namespace ImageSearch.DataModel
+﻿namespace SearchTool.DataModel
 {
     /// <summary>
     /// Size at which image has to be displayed. selected by user

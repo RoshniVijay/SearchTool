@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1169
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.View", "ImageSearch.UserInterface\ImageSearch.View.csproj", "{E333C6F2-FB35-4451-BC0A-391AE63D902C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTool.View", "ImageSearch.UserInterface\SearchTool.View.csproj", "{E333C6F2-FB35-4451-BC0A-391AE63D902C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.DataModel", "ImageSearch.DataModel\ImageSearch.DataModel.csproj", "{BF0B07F0-1CF9-4318-B339-469251B18704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTool.DataModel", "ImageSearch.DataModel\SearchTool.DataModel.csproj", "{BF0B07F0-1CF9-4318-B339-469251B18704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.ViewModel", "ImageSearch.ViewModel\ImageSearch.ViewModel.csproj", "{CF73D941-80EF-470A-9851-3826D930DF2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTool.ViewModel", "ImageSearch.ViewModel\SearchTool.ViewModel.csproj", "{CF73D941-80EF-470A-9851-3826D930DF2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.ServiceComponent", "ImageSearch.ServiceComponent\ImageSearch.ServiceComponent.csproj", "{F1085286-8C53-4A81-BD59-EC431C3DD41F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTool.SearchComponent", "ImageSearch.ServiceComponent\SearchTool.SearchComponent.csproj", "{F1085286-8C53-4A81-BD59-EC431C3DD41F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.ServiceComponent.Contracts", "ImageSearch.ServiceComponent.Contracts\ImageSearch.ServiceComponent.Contracts.csproj", "{01644A6C-242D-41A7-B207-0B7BF664AF83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTool.SearchComponent.Contracts", "ImageSearch.ServiceComponent.Contracts\SearchTool.SearchComponent.Contracts.csproj", "{01644A6C-242D-41A7-B207-0B7BF664AF83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSearch.Common", "ImageSearch.Common\ImageSearch.Common.csproj", "{CC530807-23C9-47F8-8D7F-6E76385E4834}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTool.Common", "ImageSearch.Common\SearchTool.Common.csproj", "{CC530807-23C9-47F8-8D7F-6E76385E4834}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{455942C8-8EC6-45BE-9A2A-B350BC67DD7B}"
 EndProject

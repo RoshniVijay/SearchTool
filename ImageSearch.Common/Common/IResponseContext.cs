@@ -1,4 +1,4 @@
-﻿namespace ImageSearch.Common
+﻿namespace SearchTool.Common
 {
     /// <summary>
     /// Interface to return the response from service component
